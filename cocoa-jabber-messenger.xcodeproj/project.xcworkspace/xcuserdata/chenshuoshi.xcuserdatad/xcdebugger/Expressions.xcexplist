@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "gloox::ClientBase::send(std::string const&amp;):clientbase.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "gloox::Parser::closeTag():parser.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "tag">
+            </PersistentString>
+            <PersistentString
+               value = "m_tagHandler">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "gloox::ClientBase::parse(std::string const&amp;):clientbase.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "gloox::Parser::feed(std::string&amp;):parser.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "gloox::ClientBase::send(gloox::Tag*):clientbase.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "CXmpp::requestVcard(NSString*):XMPP.mm">
+      </ContextState>
+      <ContextState
+         contextName = "gloox::ClientBase::handleTag(gloox::Tag*):clientbase.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "(bool)m_seFactory">
+            </PersistentString>
+            <PersistentString
+               value = "m_seFactory">
+            </PersistentString>
+            <PersistentString
+               value = "!handleNormalNode(tag)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "gloox::VCardManager::fetchVCard(gloox::JID const&amp;, gloox::VCardHandler*):vcardmanager.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "(null):(null)">
+      </ContextState>
+      <ContextState
+         contextName = "gloox::OpenSSLBase::decrypt(std::string const&amp;):tlsopensslbase.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "gloox::ConnectionTCPClient::recv(int):connectiontcpclient.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "m_handler">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "gloox::ClientBase::send(gloox::IQ&amp;, gloox::IqHandler*, int, bool):clientbase.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "CXmpp::connect():XMPP.mm">
+         <PersistentStrings>
+            <PersistentString
+               value = "lastTime">
+            </PersistentString>
+            <PersistentString
+               value = "m_pClient">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[XMPP onConnect:]:XMPP.mm">
+         <PersistentStrings>
+            <PersistentString
+               value = "[item photo]">
+            </PersistentString>
+            <PersistentString
+               value = "!item">
+            </PersistentString>
+            <PersistentString
+               value = "![item photo]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[RequestWithTGT exchangeTgt]:RequestWithTGT.m">
+      </ContextState>
+      <ContextState
+         contextName = "gloox::ConnectionTCPBase::send(std::string const&amp;):connectiontcpbase.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "m_totalBytesOut">
+            </PersistentString>
+            <PersistentString
+               value = "m_handler">
+            </PersistentString>
+            <PersistentString
+               value = "!m_socket">
+            </PersistentString>
+            <PersistentString
+               value = "m_socket">
+            </PersistentString>
+            <PersistentString
+               value = "sent">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[XMPP onDisconnect:]:XMPP.mm">
+         <PersistentStrings>
+            <PersistentString
+               value = "pDelegate">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ImageAndTextCell drawWithFrame:inView:]:ImageAndTextCell.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "image">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
