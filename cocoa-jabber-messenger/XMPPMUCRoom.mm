@@ -145,8 +145,7 @@ bool    CMUCRoomEventHandler::handleMUCRoomDestruction( gloox::MUCRoom* room )
 {
     //create chat window
     dataObject = [obj retain];
-    windowController = [[MUCChatWindowController alloc ] initWithWindowNibName:@"MUCChatWindow"];
-    [[windowController window] makeKeyAndOrderFront:nil];
+    windowController = [[MUCChatWindowController alloc] initWithWindowNibName:@"MUCChatWindow"];
     NSData* imageData = [dataObject valueForKey:@"image"];
     if (imageData) {
         NSImage* image = [[NSImage alloc]initWithData:imageData];
@@ -239,9 +238,7 @@ bool    CMUCRoomEventHandler::handleMUCRoomDestruction( gloox::MUCRoom* room )
 - (BOOL) activateRoom:(NSString*) roomJid
 {
     if ([rooms objectForKey:roomJid] != nil) {
-        if ([[rooms objectForKey:roomJid] chatWindowCreated]) {
-            [[rooms objectForKey:roomJid] activateWindow];
-        } else {
+        if ([[rooms objectForKey:roomJid] chatWindowCreated] == NO) {
             NSManagedObject* obj = [mucRoomDataContxt findRoomByJid:roomJid];
             if (!obj) {
                 return NO;
