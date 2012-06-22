@@ -112,4 +112,5 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
     return [[self dataSource] tableView:self objectValueForTableColumn:tabCol row: row];
 }
+
 @end

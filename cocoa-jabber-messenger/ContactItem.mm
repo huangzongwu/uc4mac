@@ -21,7 +21,6 @@
 @synthesize status;
 @synthesize online;
 @synthesize vcard;
-@synthesize image;
 
 - (id)init
 {

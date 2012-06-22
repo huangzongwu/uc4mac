@@ -12,18 +12,36 @@
 @implementation AsyncImage
 @synthesize picName;
 @synthesize data;
+@synthesize asyncImageDelegates;
 
-- (void)loadImageFromURL:(NSURL*) url {
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        // Initialization code here.
+        asyncImageDelegates = [[NSMutableArray alloc] init];
+    }    
+    return self;
+}
+
+- (void) loadImage:(NSString*) thePicName 
+{
     if (connection) { 
         [connection release]; 
     }
     if (data) { 
         [data release]; 
     }
-    NSLog(@"url: %@", url);
-    NSURLRequest* request = [NSURLRequest requestWithURL:url
-                                             cachePolicy:NSURLRequestUseProtocolCachePolicy
-                             timeoutInterval:15];
+    [self setPicName:thePicName];
+    
+    NSURLRequest* request = [NSURLRequest requestWithURL:
+                             [NSURL URLWithString:
+                                [NSString stringWithFormat:@"http://uc.s.dpool.sina.com.cn/nd/img1uc/%@/%@/%@", 
+                                [thePicName substringWithRange:NSMakeRange(0, 2)],
+                                [thePicName substringWithRange:NSMakeRange(2, 2)],
+                                thePicName]]
+                                cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                timeoutInterval:15];
     connection = [[NSURLConnection alloc]
                   initWithRequest:request delegate:self];
     //TODO error handling, what if connection is nil?
@@ -32,7 +50,7 @@
         // receivedData is an instance variable declared elsewhere.
         data = [[NSMutableData alloc] init];
     } else {
-        NSLog(@"fail to get pic %@", url);
+        NSLog(@"fail to get pic %@", thePicName);
     }
 }
 
@@ -55,28 +73,32 @@
           [[error userInfo] objectForKey:NSURLErrorFailingURLStringErrorKey]);
 }
 
-- (void) registerAsyncImageDelegate:(id < AsyncImageDelegate >) connectionDelegate
+- (void) registerAsyncImageDelegate:(id < AsyncImageDelegate >) asyncImageDelegate
 {
-    [asyncImageDelegates addObject:connectionDelegate];
+    [asyncImageDelegates addObject:asyncImageDelegate];
 }
 
-- (void) deregisterAsyncImageDelegate:(id < AsyncImageDelegate >) connectionDelegate
+- (void) deregisterAsyncImageDelegate:(id < AsyncImageDelegate >) asyncImageDelegate
 {
-    [asyncImageDelegates removeObject:connectionDelegate];
+    [asyncImageDelegates removeObject:asyncImageDelegate];
 }
 
 - (void) connectionDidFinishLoading:(NSURLConnection*) theConnection 
 {
+    //write data to /tmp/picname
+    [data writeToFile:[NSString stringWithFormat:@"/tmp/%@", picName] atomically:false];
     NSEnumerator* e = [asyncImageDelegates objectEnumerator];
     id < AsyncImageDelegate > asyncImageDelegate;
     while (asyncImageDelegate = [e nextObject]) {
-        [asyncImageDelegate imageloaded:picName withData:data];
+        [asyncImageDelegate imageloaded:picName];
     }
 }
 
-- (void)dealloc {
+- (void) dealloc 
+{
     [connection cancel];
     [connection release];
+    [asyncImageDelegates release];
     [super dealloc];
 }
 

@@ -11,8 +11,8 @@
 
 @implementation ChatTextFieldCell
 
-- (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView {
-
+- (void) drawInteriorWithFrame:(NSRect) cellFrame inView:(NSView*) controlView 
+{
     BOOL isFocused = NO;
     
     if (([[controlView window] firstResponder] == controlView) && 
@@ -24,7 +24,6 @@
     }
 
     NSAttributedString* timeStamp = [self attributedTimeStampStringFromDate:messageTime];
-    NSRect timeStampRect = [timeStamp boundingRectWithSize:NSMakeSize(1000, 1000) options:0];
     NSRect textRect = [self textRectFromCellFrame:cellFrame withMinimumWidth:100];
         
     NSRect bpRect = textRect;
@@ -34,7 +33,7 @@
 
     [self drawRect:bpRect withIsKeyWindow:isFocused];
     
-    timeStampRect = textRect;
+    NSRect timeStampRect = textRect;
     timeStampRect.origin.y += (timeStampRect.size.height-15);
     //timeStampRect.size.width -= 10;
     [timeStamp drawInRect:timeStampRect];

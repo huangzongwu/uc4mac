@@ -7,19 +7,26 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "AsyncImageDelegate.h"
+#import "XMPPVcardUpdateDelegate.h"
 
+@class AsyncImage;
+@class AsyncImageDelegate;
+@class RowResizableTableView;
 @class MessageItem;
 @class XMPPSession;
 @class HistoryWindowController;
-@interface ChatWindowController : NSWindowController< NSTableViewDataSource, NSTableViewDelegate> 
+@interface ChatWindowController : NSWindowController <NSTableViewDataSource, NSTableViewDelegate, AsyncImageDelegate, XMPPVcardUpdateDelegate> 
 {
-	IBOutlet NSTableView* chatListCtrl;
+	IBOutlet RowResizableTableView* chatListCtrl;
 	IBOutlet NSTextFieldCell* msgToSend;
 	IBOutlet NSImageView* profileImageView;
 	IBOutlet NSTextField* commentCtrl;
     IBOutlet NSTextField* targetNameField;
     IBOutlet NSTextField* targetJidField;
 	NSMutableArray*	messageArray;
+    NSMutableDictionary* imageArrary;
+    AsyncImage* asyncImg;
 	NSImage* targetImage;
 	NSImage* myImage;
     NSString* targetName;
@@ -34,6 +41,7 @@
 @property (nonatomic, retain) NSString* targetName;
 @property (nonatomic, retain) NSString* targetJid;
 
+- (void) vcardUpdate:(ContactItem*) item;
 - (void) registerSession:(XMPPSession*) session;
 - (void) onMessageReceived:(MessageItem*) msg;
 - (IBAction) send:(id) sender;

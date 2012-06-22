@@ -13,10 +13,10 @@
 @private
     IBOutlet NSTableView* historyList;
     NSInteger currentPage;
+    NSMutableArray* history;
     NSString* jid;
 }
 
-@property (retain) NSMutableArray* history;
 @property (assign) NSInteger currentPage;
 @property (assign) NSString* jid;
 

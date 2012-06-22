@@ -14,15 +14,15 @@
 #import "MessageItem.h"
 #import "GrowlLinker.h"
 
-#include <gloox/message.h>
-#include <gloox/messagesession.h>
-#include <gloox/messagehandler.h>
-#include <gloox/messageeventhandler.h>
-#include <gloox/chatstatehandler.h>
-#include <gloox/mutex.h>
+#include "message.h"
+#include "messagesession.h"
+#include "messagehandler.h"
+#include "messageeventhandler.h"
+#include "chatstatehandler.h"
+#include "mutex.h"
 
-#include <gloox/chatstatefilter.h>
-#include <gloox/messageeventfilter.h>
+#include "chatstatefilter.h"
+#include "messageeventfilter.h"
 
 @interface XMPPSession(SessionHandler)
 - (void) handleMessage:(MessageItem*) item;

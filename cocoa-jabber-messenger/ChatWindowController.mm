@@ -13,6 +13,8 @@
 #import "XMPPSession.h"
 #import "MessageItem.h"
 #import "XMPP.h"
+#import "ContactItem.h"
+#import "AsyncImage.h"
 
 @implementation ChatWindowController
 @synthesize targetImage;
@@ -83,7 +85,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(readMessage:)
                                                  name:NSApplicationDidBecomeActiveNotification object:nil];
-	messageArray = [[NSMutableArray alloc] init] ;
+	messageArray = [[NSMutableArray alloc] init];
+    imageArrary = [[NSMutableDictionary alloc] init];
+    asyncImg = [[AsyncImage alloc] init];
+    [asyncImg registerAsyncImageDelegate:self];
 	[chatListCtrl setDataSource:self];
 	[chatListCtrl setDelegate:self];
     [chatListCtrl setDoubleAction:@selector(onDoubleClick:)];
@@ -97,6 +102,9 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [messageArray removeAllObjects];
 	[messageArray release];    
+    [imageArrary removeAllObjects];
+    [imageArrary release];
+    [asyncImg release];
     [targetImage release];
     [targetJid release];
     [targetName release];
@@ -122,10 +130,14 @@
 {
     [self setSession:theSession];
     [historyWindowController setXmpp:[theSession xmpp]];
+    [[theSession xmpp] setVcardUpdateDelegate: self];
 }
 
 - (IBAction) send:(id) sender
 {
+    if (!session) {
+        return;
+    }
 	if (!msgToSend) {
 		return;
 	}
@@ -207,7 +219,18 @@
             [[aTableColumn dataCell] setMessageTime:[item timeStamp]];
         }
         if ([[item images] count] > 0) {
-            [[aTableColumn dataCell] setImages:[item images]];
+            int requested = 0;
+            for (NSString* image in [item images]) {
+                if (![imageArrary valueForKey:image]) {
+                    [imageArrary setValue:@"loading" forKey:image];
+                    [asyncImg loadImage:image];
+                } else if ([[imageArrary valueForKey:image] isEqualToString:@"finish"]) {
+                    ++requested;
+                }
+            }
+            if (requested == [[item images] count]) {
+                [[aTableColumn dataCell] setImages:[item images]];
+            }
         }
 		if (rowIndex == [aTableView selectedRow]) {
 			[[aTableColumn dataCell] setSelected:YES];
@@ -217,6 +240,19 @@
 		return [item message];
 	}
 	return @"";
+}
+
+- (void) imageloaded:(NSString*) picName
+{
+    [imageArrary setValue:@"finish" forKey:picName];
+    [chatListCtrl reloadData];
+}
+
+- (void) vcardUpdate:(ContactItem*) item;
+{
+    NSImage* image = [[NSImage alloc] initWithData:[item photo]];
+    [self setTargetImage: image];
+    [self setTargetName: [item name]];
 }
 
 - (IBAction) copy:(id) sender

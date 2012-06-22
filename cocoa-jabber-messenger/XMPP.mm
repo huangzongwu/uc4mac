@@ -20,24 +20,24 @@
 #import <CommonCrypto/CommonDigest.h>
 
 #include <sys/time.h>
-#include <gloox/gloox.h>
-#include <gloox/client.h>
-#include <gloox/eventhandler.h>
-#include <gloox/rostermanager.h>
-#include <gloox/messagehandler.h>
-#include <gloox/presencehandler.h>
-#include <gloox/vcardhandler.h>
-#include <gloox/connectionlistener.h>
-#include <gloox/rosterlistener.h>
-#include <gloox/error.h>
-#include <gloox/vcardmanager.h>
-#include <gloox/mutex.h>
-#include <gloox/pubsubmanager.h>
-#include <gloox/messagesessionhandler.h>
-#include <gloox/messagesession.h>
-#include <gloox/message.h>
-#include <gloox/mucroom.h>
-#include <gloox/mucroomhandler.h>
+#include "gloox.h"
+#include "client.h"
+#include "eventhandler.h"
+#include "rostermanager.h"
+#include "messagehandler.h"
+#include "presencehandler.h"
+#include "vcardhandler.h"
+#include "connectionlistener.h"
+#include "rosterlistener.h"
+#include "error.h"
+#include "vcardmanager.h"
+#include "mutex.h"
+#include "pubsubmanager.h"
+#include "messagesessionhandler.h"
+#include "messagesession.h"
+#include "message.h"
+#include "mucroom.h"
+#include "mucroomhandler.h"
 
 // md5函数
 NSString * md5( NSString *str )
@@ -295,7 +295,7 @@ bool    CXmpp::setLoginInfo(NSString* loginId, NSString* password)
     gloox::JID* jid = new gloox::JID();
     jid->setServer("uc.sina.com.cn");
     jid->setResource("darwin");
-    [[m_pDelegate tgtRequest] setTgt:md5([NSString stringWithFormat:@"%@%@", loginId, password])];
+    [[m_pDelegate tgtRequest] setTgt:md5([loginId stringByAppendingFormat:@"%@", password])];
     loginId = [loginId stringByReplacingOccurrencesOfString:@"@"
                                          withString:@"\\40"];
     jid->setUsername([loginId UTF8String]);
@@ -629,9 +629,6 @@ void    CXmpp::handleLog(gloox::LogLevel level, gloox::LogArea area, const std::
 - (void) dealloc
 {
     CXmpp::instance().setDelegate(nil);
-    [connectionDelegates release];
-    [tgtRequest release];
-    [myVcard release];
     [xmppThread release];
     [super dealloc];
     //NSLog(@"XMPP destroyed");

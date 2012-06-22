@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @protocol AsyncImageDelegate <NSObject>
-- (void) imageloaded:(NSString*) picName withData:(NSData*) data;
+- (void) imageloaded:(NSString*) picName;
 @end
 

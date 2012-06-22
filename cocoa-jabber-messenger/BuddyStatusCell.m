@@ -9,7 +9,7 @@
 #import "BuddyStatusCell.h"
 
 @implementation BuddyStatusCell
-- (id)init
+- (id) init
 {
     self = [super init];
     if (self) {
@@ -18,12 +18,12 @@
     return self;
 }
 
-- (void)dealloc
+- (void) dealloc
 {
     [super dealloc];
 }
 
-- (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
+- (void) drawInteriorWithFrame:(NSRect) cellFrame inView:(NSView*) controlView
 {
     //    BOOL isFocused = NO;
     NSImage *gradient;

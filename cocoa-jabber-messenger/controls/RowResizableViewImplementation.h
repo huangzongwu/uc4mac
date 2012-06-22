@@ -607,7 +607,7 @@ int lastOverRow;
     return maxHeight;
 }
 
-- (NSCell*)cellForRow:(int)row column:(int)col
+- (NSCell*) cellForRow:(int) row column:(int) col
 {
     NSArray *tableCols = [self tableColumns];
     NSTableColumn* tabCol = [tableCols objectAtIndex:col];
@@ -618,7 +618,7 @@ int lastOverRow;
 ////////////////////
 //
 //
-- (void)awakeFromNib
+- (void) awakeFromNib
 {
 	[[self window] setAcceptsMouseMovedEvents:YES];
 	trackingTag = [self addTrackingRect:[self frame] owner:self userData:nil assumeInside:NO];
@@ -627,12 +627,12 @@ int lastOverRow;
 	lastOverRow = -1;
 }
 
-- (void)mouseEntered:(NSEvent*)theEvent
+- (void) mouseEntered:(NSEvent*) theEvent
 {
 	mouseOverView = YES;
 }
 
-- (void)mouseMoved:(NSEvent*)theEvent
+- (void) mouseMoved:(NSEvent*) theEvent
 {
 	id myDelegate = [self delegate];
     

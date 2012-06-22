@@ -12,7 +12,6 @@
 #import "MUCRoomChatTextFieldCell.h"
 
 @implementation MUCRoomChatHistoryViewController
-@synthesize history;
 @synthesize currentPage;
 @synthesize jid;
 

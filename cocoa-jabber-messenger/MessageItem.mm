@@ -17,6 +17,21 @@
 @synthesize timeStamp;
 @synthesize images;
 
+- (id) init
+{
+    self = [super init];
+    if (self) {
+        images = [[NSMutableArray alloc] init];
+    }
+    return self;
+}
+
+- (void) dealloc
+{
+    [images removeAllObjects];
+    [images release];
+}
+
 - (void) setMessage:(NSString *) theMessage
 {
     [message release];
@@ -24,12 +39,15 @@
         NSString *regex = @"\\t{3}36([a-z0-9]+?\\.(?:jpg|png|gif))";
         NSArray* origImages = [theMessage arrayOfCaptureComponentsMatchedByRegex:regex];
         if ([origImages count] > 0) {
-            images = [[NSMutableArray alloc] init];
             for (NSArray* urlString in origImages) {
                 NSString* origString = [urlString objectAtIndex:0];
                 NSString* url = [urlString objectAtIndex:1];
                 [images addObject:url];
-                theMessage = [theMessage stringByReplacingOccurrencesOfString:origString withString:@""];
+                theMessage = [theMessage stringByReplacingOccurrencesOfString:origString withString:
+                              [NSString stringWithFormat:@"http://uc.s.dpool.sina.com.cn/nd/img1uc/%@/%@/%@", 
+                               [url substringWithRange:NSMakeRange(0, 2)],
+                               [url substringWithRange:NSMakeRange(2, 2)],
+                               url]];
             }
         }
     }

@@ -16,10 +16,10 @@
 #import "MUCRoomItem.h"
 #import "MUCRoomContactItem.h"
 #import "GrowlLinker.h"
-#include <gloox/message.h>
-#include <gloox/mucroomhandler.h>
-#include <gloox/mucroom.h>
-#include <gloox/mutex.h>
+#include "message.h"
+#include "mucroomhandler.h"
+#include "mucroom.h"
+#include "mutex.h"
 #include <string.h>
 
 #pragma mark *** CMUCRoomEventHandler Implementation ***

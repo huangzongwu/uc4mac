@@ -11,7 +11,7 @@
 #import "XMPP.h"
 #import "ContactItem.h"
 #import "ContactManager.h"
-#include "gloox/presence.h"
+#include "presence.h"
 #import "ContactDataContext.h"
 
 #pragma mark *** ContactViewController ***

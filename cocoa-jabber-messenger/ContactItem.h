@@ -18,7 +18,6 @@
     NSString* name;
     NSString* jid;
     NSString* fullJid;
-    NSImage* image;
     NSData* photo;
     NSString* status;
     NSArray* groups;
@@ -35,7 +34,6 @@
 @property (nonatomic, retain) NSData* photo;
 @property (nonatomic, retain) NSString* status;
 @property (nonatomic, retain) NSArray* groups;
-@property (nonatomic, retain) NSImage* image;
 @property (nonatomic, retain) NSString* pinyin;
 @property (assign) NSInteger presence;
 @property (assign) BOOL online;

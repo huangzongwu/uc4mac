@@ -7,6 +7,7 @@
 //
 
 #import "BaseChatTextFiledCell.h"
+#import "RowResizableTableView.h"
 #import "RegexKitLite.h"
 
 const NSInteger CORNER_RADIUS = 5;
@@ -19,15 +20,14 @@ const NSInteger ARROW_HEIGHT = 10;
 @synthesize images;
 @synthesize messageTime;
 @synthesize selected;
-@synthesize imageloaded;
 //@synthesize backgroundColor;
 @synthesize linkClickedHandler = _linkClickedHandler;
 
 - (id) init {
 	[super init];
     //	_cFlags.vCentered = 1;
+    selected = NO;
 	leftArrow = YES;
-    imageloaded = NO;
 	return self;
 }
 
@@ -57,7 +57,7 @@ const NSInteger ARROW_HEIGHT = 10;
 		textRect.origin.x-=15;
 	}
     NSSize requiredSize = [self cellSizeForBounds:textRect];
-    NSInteger requiredWidth = (requiredSize.width+5 > minimumWidth)?requiredSize.width+5:minimumWidth;
+    NSInteger requiredWidth = (requiredSize.width+5 > minimumWidth) ? requiredSize.width+5 : minimumWidth;
     if (textRect.size.width > requiredWidth) {
         if (!leftArrow) {
             textRect.origin.x += (textRect.size.width - requiredWidth);
@@ -69,7 +69,7 @@ const NSInteger ARROW_HEIGHT = 10;
 
 // Text cells in NSTableView's normally don't "track the mouse", since they don't resond to clicks. 
 // Wait! What about editing? Well, that is done via the NSFieldEditor which handles the clicks/selection/etc.
-- (NSUInteger)hitTestForEvent:(NSEvent *)event inRect:(NSRect)cellFrame ofView:(NSView *)controlView {
+- (NSUInteger) hitTestForEvent:(NSEvent *)event inRect:(NSRect)cellFrame ofView:(NSView *)controlView {
     NSUInteger hitTestResult = [super hitTestForEvent:event 
                                                inRect:[self textRectFromCellFrame:cellFrame withMinimumWidth:0] ofView:controlView];
     // If we hit on content (ie: text, and not whitespace), then we go ahead and say we want to track
@@ -120,11 +120,11 @@ const NSInteger ARROW_HEIGHT = 10;
 
 // Add an AXPress action to list of actions we support, when asked to perform, handle the link click.
 
-- (NSArray *)accessibilityActionNames {
+- (NSArray*) accessibilityActionNames {
     return [[super accessibilityActionNames] arrayByAddingObject:NSAccessibilityPressAction];
 }
 
-- (void)accessibilityPerformAction:(NSString *)action {
+- (void) accessibilityPerformAction:(NSString *)action {
     if ([action isEqualToString:NSAccessibilityPressAction]) {
         [self _handleLinkClick];
     } else {
@@ -132,7 +132,7 @@ const NSInteger ARROW_HEIGHT = 10;
     }
 }
 
-- (NSBezierPath *)bezierPathWithRect:(NSRect) rect
+- (NSBezierPath*) bezierPathWithRect:(NSRect) rect
 {
 	NSBezierPath *bp = [NSBezierPath bezierPath];
 	float leftOX = rect.origin.x; 
@@ -190,7 +190,7 @@ const NSInteger ARROW_HEIGHT = 10;
 	return bp;
 }
 
-- (void)drawRect:(NSRect) rect withIsKeyWindow:(BOOL) isKeyWindow {
+- (void) drawRect:(NSRect) rect withIsKeyWindow:(BOOL) isKeyWindow {
 	//NSBezierPath *bp = [NSBezierPath bezierPathWithRoundedRect:rect xRadius:2 yRadius:2];
     NSBezierPath* bp = [self bezierPathWithRect:rect];
 	if (selected) {
@@ -272,23 +272,41 @@ const NSInteger ARROW_HEIGHT = 10;
     return [[[NSAttributedString alloc] initWithString:strTimeStamp attributes:attrs] autorelease];
 }
 
-- (void)drawInteriorWithFrame:(NSRect) cellFrame inView:(NSView*) controlView {
-    NSRect titleRect = [self titleRectForBounds:cellFrame];
-    [[self attributedStringValue] drawInRect:titleRect];
-    /*if (true) {
+- (void) drawInteriorWithFrame:(NSRect) cellFrame inView:(NSView*) controlView {
+    NSRect textRect = [self titleRectForBounds:cellFrame];
+    
+    if (images && [[self stringValue] hasSuffix:[images objectAtIndex:0]]) {
+        NSRect imageRect = textRect;
         NSTextAttachment *attachment;  
         attachment = [[[NSTextAttachment alloc] init] autorelease];  
-        NSImage *img = [[NSImage alloc] initWithContentsOfFile:@"/tmp/test.jpg"]; // or wherever you are 
+        NSImage *img = [[NSImage alloc] initWithContentsOfFile:[NSString stringWithFormat:@"/tmp/%@", [images objectAtIndex:0]]]; // or wherever you are 
         [(NSCell*)[attachment attachmentCell] setImage:img];
         NSMutableAttributedString *imgAttrStr;  
-        imgAttrStr = (id)[NSMutableAttributedString attributedStringWithAttachment:  
-                          attachment];   
-        [imgAttrStr drawInRect:titleRect];
+        imgAttrStr = (id) [NSMutableAttributedString attributedStringWithAttachment:  
+                          attachment];  
+        imageRect.origin.y += (textRect.size.height-img.size.height-30);
+
+        [imgAttrStr drawInRect:imageRect];
         [img release];
-    }*/
+    }
+    [[self attributedStringValue] drawInRect:textRect];
+
 }
 
-- (NSRect)titleRectForBounds:(NSRect) theRect {
+- (NSSize) cellSizeForBounds:(NSRect) aRect
+{
+    NSSize textSize = [super cellSizeForBounds:aRect];
+    if (images && [[self stringValue] hasSuffix:[images objectAtIndex:0]]) {
+        NSImage *img = [[NSImage alloc] initWithContentsOfFile:[NSString stringWithFormat:@"/tmp/%@", [images objectAtIndex:0]]];
+        CGFloat w = textSize.width > img.size.width ? textSize.width : img.size.width;
+        return NSMakeSize(w, textSize.height+img.size.height);
+    } else {
+        return NSMakeSize(textSize.width, textSize.height);
+    }
+}
+
+- (NSRect) titleRectForBounds:(NSRect) theRect 
+{
     NSRect titleFrame = [super titleRectForBounds:theRect];
     if (leftArrow) {
         titleFrame.origin.x += 15;
@@ -299,7 +317,7 @@ const NSInteger ARROW_HEIGHT = 10;
     return titleFrame;
 }
 
-- (void)editWithFrame:(NSRect) aRect inView:(NSView*) controlView editor:(NSText*) textObj delegate:(id)anObject event:(NSEvent*) theEvent
+- (void) editWithFrame:(NSRect) aRect inView:(NSView*) controlView editor:(NSText*) textObj delegate:(id)anObject event:(NSEvent*) theEvent
 {
 	NSRect textRect = [self textRectFromCellFrame:aRect withMinimumWidth:100];
     if (leftArrow) {
@@ -312,7 +330,7 @@ const NSInteger ARROW_HEIGHT = 10;
     [textObj setDrawsBackground:NO];    
 }
 
-- (void)selectWithFrame:(NSRect) aRect inView:(NSView*) controlView editor:(NSText*) textObj delegate:(id) anObject start:(NSInteger) selStart length:(NSInteger) selLength
+- (void) selectWithFrame:(NSRect) aRect inView:(NSView*) controlView editor:(NSText*) textObj delegate:(id) anObject start:(NSInteger) selStart length:(NSInteger) selLength
 {
 	NSRect textRect = [self textRectFromCellFrame:aRect withMinimumWidth:100];
     if (leftArrow) {

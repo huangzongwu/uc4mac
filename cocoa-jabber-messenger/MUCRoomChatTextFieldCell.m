@@ -38,9 +38,7 @@
     
     NSAttributedString* name = [self attributedNameString:sender];
     NSAttributedString* timeStamp = [self attributedTimeStampStringFromDate:messageTime];
-    NSRect nameRect = [name boundingRectWithSize:NSMakeSize(1000, 1000) options:0];
-    NSRect timeStampRect = [timeStamp boundingRectWithSize:NSMakeSize(1000, 1000) options:0];
-    NSRect textRect = [self textRectFromCellFrame:cellFrame withMinimumWidth:100];
+        NSRect textRect = [self textRectFromCellFrame:cellFrame withMinimumWidth:100];
     
     NSRect bpRect = textRect;
     bpRect.origin.y += 5;
@@ -52,12 +50,12 @@
     }
     [self drawRect:bpRect withIsKeyWindow:isFocused];
     
-    timeStampRect = textRect;
+    NSRect timeStampRect = textRect;
     timeStampRect.origin.y += (timeStampRect.size.height-15);
     timeStampRect.size.width -= 10;
     [timeStamp drawInRect:timeStampRect];
     
-    nameRect = textRect;
+    NSRect nameRect = textRect;
     nameRect.origin.y = (nameRect.origin.y+2);
     [name drawInRect:nameRect];
     

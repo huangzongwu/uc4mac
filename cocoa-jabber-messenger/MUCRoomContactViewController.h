@@ -19,7 +19,7 @@
 }
 
 @property (assign) XMPP* xmpp;
-@property (retain) NSMutableArray* contacts;
+@property (assign) NSMutableArray* contacts;
 
 - (void) updateContacts:(NSArray*) mucRoomContacts;
 @end

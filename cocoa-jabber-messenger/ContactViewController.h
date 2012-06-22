@@ -13,7 +13,7 @@
 @class ContactGroupManager;
 @class XMPP;
 @class ContactDataContext;
-@interface ContactViewController : NSViewController <XMPPVcardUpdateDelegate, NSOutlineViewDataSource> {
+@interface ContactViewController : NSViewController <NSOutlineViewDataSource, XMPPVcardUpdateDelegate> {
 @private
     ContactGroupManager* groupManager;
     NSTextFieldCell*    iGroupRowCell;

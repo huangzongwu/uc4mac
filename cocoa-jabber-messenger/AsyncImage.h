@@ -21,7 +21,10 @@
 
 @property (assign) NSMutableData* data;
 @property (assign) NSString* picName;
+@property (assign) NSMutableArray* asyncImageDelegates;
 
-- (void)loadImageFromURL:(NSURL*) url;
+- (void) loadImage:(NSString*) url;
+- (void) registerAsyncImageDelegate:(id < AsyncImageDelegate >) asyncImageDelegate;
+- (void) deregisterAsyncImageDelegate:(id < AsyncImageDelegate >) asyncImageDelegate;
 
 @end

@@ -54,6 +54,8 @@
                                                          inManagedObjectContext: self];   
     [obj setValuesForKeysWithDictionary:dic];
     [self insertObject:obj];
+    NSError *saveError = nil;   
+    [self save:&saveError];
 }
 
 - (NSArray*) fetchGroup
@@ -113,6 +115,8 @@
     }
     NSMutableSet *groupContacts = [parent mutableSetValueForKey:@"children"];  
     [groupContacts addObject:obj];
+    NSError *saveError = nil;   
+    [self save:&saveError];
 }
 
 - (NSManagedObject*) findContactByValue:(NSString*) value forKey:(NSString*) key

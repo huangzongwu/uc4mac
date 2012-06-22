@@ -8,7 +8,7 @@
 
 #import "SearchViewController.h"
 #import "BuddyCell.h"
-#include "gloox/presence.h"
+#include "presence.h"
 #import "XMPP.h"
 #import "ContactItem.h"
 #import "ContactDataContext.h"
