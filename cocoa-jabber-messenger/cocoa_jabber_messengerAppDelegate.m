@@ -22,7 +22,7 @@
     [growl setDelegate];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(readMessage:) name:@"readMessage" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(unreadMessage:) name:@"unreadMessage" object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(contactStatus:) name:@"contactStatus" object:nil];
+    //[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(contactStatus:) name:@"contactStatus" object:nil];
     NSFileManager *fileManager;
     NSString *applicationSupportFolder = nil;
     fileManager = [NSFileManager defaultManager];

@@ -56,13 +56,13 @@
 
 - (void) connection:(NSURLConnection*) theConnection didReceiveData:(NSData*) incrementalData 
 {
+    NSLog(@"recv data");
     [data appendData:incrementalData];
 }
 
 - (void) connection:(NSURLConnection*) theConnection didReceiveResponse:(NSURLResponse*) response
 {
     NSLog(@"recv init");
-    [data setLength:0];
 }
 
 - (void) connection:(NSURLConnection*) theConnection didFailWithError:(NSError*) error
@@ -73,12 +73,12 @@
           [[error userInfo] objectForKey:NSURLErrorFailingURLStringErrorKey]);
 }
 
-- (void) registerAsyncImageDelegate:(id < AsyncImageDelegate >) asyncImageDelegate
+- (void) registerAsyncImageDelegate:(id <AsyncImageDelegate>) asyncImageDelegate
 {
     [asyncImageDelegates addObject:asyncImageDelegate];
 }
 
-- (void) deregisterAsyncImageDelegate:(id < AsyncImageDelegate >) asyncImageDelegate
+- (void) deregisterAsyncImageDelegate:(id <AsyncImageDelegate>) asyncImageDelegate
 {
     [asyncImageDelegates removeObject:asyncImageDelegate];
 }

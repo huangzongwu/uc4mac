@@ -22,8 +22,8 @@
 @private
     NSMutableDictionary* myVcard;
     NSMutableArray* connectionDelegates;
+    NSMutableArray* vcardUpdateDelegates;
     NSMutableArray* stanzas;
-    id <XMPPVcardUpdateDelegate> vcardUpdateDelegate;
     id <SearchDelegate> searchDelegate;
     XMPPThread* xmppThread;
     
@@ -33,7 +33,6 @@
 }
 
 @property (assign) NSMutableDictionary* myVcard;
-@property (assign) id <XMPPVcardUpdateDelegate> vcardUpdateDelegate;
 @property (assign) id <SearchDelegate> searchDelegate;
 
 - (XMPPSessionManager*) sessionManager;
@@ -44,8 +43,10 @@
 - (void) requestVcard:(NSString*) jid;
 - (void) updateSelfVcard:(ContactItem*) item;
 - (void) disconnect;
-- (void) registerConnectionDelegate:(id < XMPPConnectionDelegate >) connectionDelegate;
-- (void) deregisterConnectionDelegate:(id < XMPPConnectionDelegate >) connectionDelegate;
+- (void) registerVcardUpdateDelegate:(id <XMPPVcardUpdateDelegate>) vcardUpdateDelegate;
+- (void) deregisterVcardUpdateDelegate:(id <XMPPVcardUpdateDelegate>) vcardUpdateDelegate;
+- (void) registerConnectionDelegate:(id <XMPPConnectionDelegate>) connectionDelegate;
+- (void) deregisterConnectionDelegate:(id <XMPPConnectionDelegate>) connectionDelegate;
 - (BOOL) isFinished;
 - (void) startChat:(NSString*) jid;
 - (void) startRoomChat:(NSString*) jid;

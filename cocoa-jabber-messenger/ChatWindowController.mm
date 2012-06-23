@@ -10,9 +10,9 @@
 #import "ChatWindowController.h"
 #import "ChatTextFieldCell.h"
 #import "RowResizableTableView.h"
+#import "XMPP.h"
 #import "XMPPSession.h"
 #import "MessageItem.h"
-#import "XMPP.h"
 #import "ContactItem.h"
 #import "AsyncImage.h"
 
@@ -130,7 +130,7 @@
 {
     [self setSession:theSession];
     [historyWindowController setXmpp:[theSession xmpp]];
-    [[theSession xmpp] setVcardUpdateDelegate: self];
+    [[theSession xmpp] registerVcardUpdateDelegate: self];
 }
 
 - (IBAction) send:(id) sender
@@ -250,9 +250,11 @@
 
 - (void) vcardUpdate:(ContactItem*) item;
 {
-    NSImage* image = [[NSImage alloc] initWithData:[item photo]];
-    [self setTargetImage: image];
-    [self setTargetName: [item name]];
+    if ([[item jid] isEqualToString: [self targetJid]]) {
+        NSImage* image = [[NSImage alloc] initWithData:[item photo]];
+        [self setTargetImage: image];
+        [self setTargetName: [item name]];
+    }
 }
 
 - (IBAction) copy:(id) sender

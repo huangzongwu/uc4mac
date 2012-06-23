@@ -25,7 +25,7 @@
 	iGroupRowCell = [[NSTextFieldCell alloc] init];
 	[iGroupRowCell setEditable:NO];
 	[iGroupRowCell setLineBreakMode:NSLineBreakByTruncatingTail];
-    [xmpp setVcardUpdateDelegate:self];
+    [xmpp registerVcardUpdateDelegate:self];
     groupManager = [[ContactGroupManager alloc]init];
     [contactList setIntercellSpacing:NSMakeSize(0,0)];
     [contactList setTarget:self];
@@ -162,9 +162,11 @@
         case gloox::Presence::Error:
             return [NSString stringWithString:@"Error"];
             break;*/
+            
         case PRESENCE_UNKNOWN:
             return [NSImage imageNamed:@"status_offline.png"];
             break;    
+            
         default:
             return [NSImage imageNamed:@"status_offline.png"];
             break;

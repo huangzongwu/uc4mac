@@ -4586,7 +4586,7 @@ NSString* FindLetter(int nCode)
 			}
 			if(nCode==3593)
 			{
-				strValue== @" MIU";
+				strValue= @" MIU";
 				break;
 			}
 			if(nCode>=3594 && nCode<=3616)
@@ -4814,7 +4814,7 @@ NSString* FindLetter(int nCode)
 				strValue= @" QI";
 				break;
 			}
-			if(nCode==3894||nCode>=3901 && nCode<=3902)
+			if(nCode==3894||(nCode>=3901 && nCode<=3902))
 			{
 				strValue= @" QIA";
 				break;
@@ -5833,7 +5833,7 @@ char pinyinFirstLetter(unsigned short hanzi)
     unsigned char ucHigh, ucLow;
     int  nCode;
     NSString * strValue = @"";
-	int iLen = [gb2312_data length];
+	int iLen = (int)[gb2312_data length];
 	char * gb2312_string = ( char *)[gb2312_data bytes];
     for (int i=0; i< iLen; i++)
     {

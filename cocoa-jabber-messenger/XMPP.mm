@@ -608,7 +608,6 @@ void    CXmpp::handleLog(gloox::LogLevel level, gloox::LogArea area, const std::
 
 @implementation XMPP
 @synthesize myVcard;
-@synthesize vcardUpdateDelegate;
 @synthesize searchDelegate;
 
 //SYNTHESIZE_SINGLETON_FOR_CLASS(XMPP)
@@ -619,6 +618,7 @@ void    CXmpp::handleLog(gloox::LogLevel level, gloox::LogArea area, const std::
     if (self) {
         // Initialization code here.
         connectionDelegates = [[NSMutableArray alloc] init];
+        vcardUpdateDelegates = [[NSMutableArray alloc] init];
         tgtRequest = [[RequestWithTGT alloc] init];
         myVcard = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@"", @"uid", @"", @"jid", @"", @"name", nil, @"image", nil];
         //NSLog(@"XMPP initialized");
@@ -661,14 +661,24 @@ void    CXmpp::handleLog(gloox::LogLevel level, gloox::LogArea area, const std::
     CXmpp::instance().requestVcard(jid);
 }
 
-- (void) registerConnectionDelegate:(id < XMPPConnectionDelegate >) connectionDelegate
+- (void) registerVcardUpdateDelegate:(id <XMPPVcardUpdateDelegate>) vcardUpdateDelegate
 {
-    [connectionDelegates addObject:connectionDelegate];
+    [vcardUpdateDelegates addObject: vcardUpdateDelegate];
 }
 
-- (void) deregisterConnectionDelegate:(id < XMPPConnectionDelegate >) connectionDelegate
+- (void) deregisterVcardUpdateDelegate:(id <XMPPVcardUpdateDelegate>) vcardUpdateDelegate
 {
-    [connectionDelegates removeObject:connectionDelegate];
+    [vcardUpdateDelegates removeObject: vcardUpdateDelegate];
+}
+
+- (void) registerConnectionDelegate:(id <XMPPConnectionDelegate>) connectionDelegate
+{
+    [connectionDelegates addObject: connectionDelegate];
+}
+
+- (void) deregisterConnectionDelegate:(id <XMPPConnectionDelegate>) connectionDelegate
+{
+    [connectionDelegates removeObject: connectionDelegate];
 }
 
 - (BOOL) loginWithId:(NSString*) loginId withPassword:(NSString*) password
@@ -753,11 +763,11 @@ void    CXmpp::handleLog(gloox::LogLevel level, gloox::LogArea area, const std::
 
 - (void) updateContact:(ContactItem*) contact
 {
-    if (!vcardUpdateDelegate) {
-        [contact release];
-        return;
+    NSEnumerator* e = [vcardUpdateDelegates objectEnumerator];
+    id <XMPPVcardUpdateDelegate> vcardUpdateDelegate;
+    while (vcardUpdateDelegate = [e nextObject]) {
+        [vcardUpdateDelegate vcardUpdate: contact];
     }
-    [vcardUpdateDelegate vcardUpdate:contact];
     if (![contact vcard]) {
         CXmpp::instance().requestVcard([contact fullJid]);
     }
@@ -766,12 +776,12 @@ void    CXmpp::handleLog(gloox::LogLevel level, gloox::LogArea area, const std::
 
 - (void) updateContacts:(NSMutableArray*) contacts
 {
-    if (!vcardUpdateDelegate) {
-        [contacts release];
-        return;
-    }
     for (ContactItem* contact in contacts) {
-        [vcardUpdateDelegate vcardUpdate:contact];
+        NSEnumerator* e = [vcardUpdateDelegates objectEnumerator];
+        id <XMPPVcardUpdateDelegate> vcardUpdateDelegate;
+        while (vcardUpdateDelegate = [e nextObject]) {
+            [vcardUpdateDelegate vcardUpdate: contact];
+        }
         if (![contact vcard]) {
             CXmpp::instance().requestVcard([contact jid]);
         }

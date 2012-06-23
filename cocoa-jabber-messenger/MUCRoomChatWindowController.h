@@ -30,12 +30,10 @@
 	NSImage* myImage;
     NSString* targetName;
     NSString* targetJid;
-    XMPP* xmpp;
     XMPPMUCRoom* room;
     MUCRoomHistoryWindowController* historyWindowController;
 }
 
-@property (assign) XMPP* xmpp;
 @property (assign) XMPPMUCRoom* room;
 @property (nonatomic, retain) NSImage* targetImage;
 @property (nonatomic, retain) NSImage* myImage;

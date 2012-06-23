@@ -6,6 +6,7 @@
 //  Copyright (c) 2012年 NHN Corporation. All rights reserved.
 //
 
+#import "AsyncImage.h"
 #import "MUCRoomHistoryWindowController.h"
 #import "MUCRoomChatWindowController.h"
 #import "MUCRoomContactViewController.h"
@@ -21,7 +22,6 @@
 @synthesize myImage;
 @synthesize targetJid;
 @synthesize targetName;
-@synthesize xmpp;
 @synthesize room;
 
 - (void)readMessage:(NSNotification *)aNotification
@@ -58,7 +58,7 @@
 
 - (void) updateContacts:(NSArray*) contacts
 {
-    [mucRoomContactViewController setXmpp:xmpp];
+    [mucRoomContactViewController setXmpp:[room xmpp]];
     [mucRoomContactViewController updateContacts:contacts];
 }
 
@@ -188,7 +188,7 @@
     MUCRoomMessageItem* item = [[MUCRoomMessageItem alloc] init];
     [item setRoomJid:targetJid];
     [item setType:@"to"];
-    [item setJid:[[xmpp myVcard] valueForKey:@"jid"]];
+    [item setJid:[[[room xmpp] myVcard] valueForKey:@"jid"]];
     [item setName:@"我"];
     [item setMessage:message];
     [item setTimeStamp:[NSDate date]];
