@@ -33,7 +33,6 @@ static bool historyWindowCreated;
 
 - (void) windowWillClose:(NSNotification*) notification
 {
-    NSLog(@"close");
     historyWindowCreated = NO;
 }
 

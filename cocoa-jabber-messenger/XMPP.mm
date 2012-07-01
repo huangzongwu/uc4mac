@@ -235,7 +235,6 @@ CXmpp::~CXmpp()
     //disconnect();
     [vcardStack release];
     [rooms release];
-    NSLog(@"class CXmpp destoried");
 }
 
 CXmpp&  CXmpp::instance()
@@ -282,7 +281,7 @@ void    CXmpp::updateRoomContacts()
     for (XMPPMUCRoom* room in rooms) {
         NSMutableDictionary* contacts = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[[m_pDelegate tgtRequest] getRoomContacts: [room gid]], @"contacts", [room jid], @"roomjid", nil];
         [roomContacts addObject:contacts];
-        NSLog(@"%@", roomContacts);
+        [contacts release];
     }
     [m_pDelegate performSelectorOnMainThread:@selector(updateRoomContacts:) withObject:roomContacts waitUntilDone:NO];
 }
@@ -493,7 +492,6 @@ void 	CXmpp::handleRoster (const gloox::Roster &roster)
 
 void 	CXmpp::handleRosterError (const gloox::IQ &iq)
 {    
-    NSLog(@"Roster Error");
 }
 
 bool 	CXmpp::handleSubscriptionRequest (const gloox::JID &jid, const std::string &msg)
@@ -794,6 +792,7 @@ void    CXmpp::handleLog(gloox::LogLevel level, gloox::LogArea area, const std::
     for (NSMutableDictionary* contacts in roomContacts) {
         [mucRoomManager updateRoomContacts:[contacts valueForKey:@"contacts"] withRoomJid:[contacts valueForKey:@"roomjid"]];
     }
+    [roomContacts release];
 }
 
 - (void) searchContacts:(NSString*) cond

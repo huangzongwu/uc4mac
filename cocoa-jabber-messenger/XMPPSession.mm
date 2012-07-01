@@ -93,7 +93,6 @@ void 	CMessageSessionEventHandler::handleChatState (const gloox::JID &from, gloo
     [dataObject release];
     [windowController close];
     [windowController release];
-    NSLog(@"destroy:XMPPSession");
     [super dealloc];
 }
 

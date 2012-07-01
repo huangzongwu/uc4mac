@@ -48,6 +48,8 @@
 //向指定群组jid的群组中插入联系人
 - (void) insertRoomContact:(MUCRoomContactItem*) mucRoomContact withRoomJid:(NSString*) roomJid;
 
+- (void) setValue:(id)value forKey:(NSString*)key intoManagedObject:(NSManagedObject*) obj;
+
 //返回群组中联系人数量
 - (NSInteger) contactCountInRoom:(NSString*) roomJid;
 

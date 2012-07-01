@@ -36,8 +36,6 @@
 @property (nonatomic, retain) NSString* targetName;
 @property (nonatomic, retain) NSString* targetJid;
 
-- (void) initContacts:(NSArray*) contacts;
-- (void) updateContact:(MUCRoomContactItem*) contact;
 - (void) onMessageReceived:(MUCRoomMessageItem*) msg;
 - (IBAction) send:(id) sender;
 - (IBAction) copy:(id) sender;

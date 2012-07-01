@@ -137,6 +137,12 @@
     }
 }
 
+- (void) updateRoomContact:(MUCRoomContactItem*) contact withRoomJid:(NSString*) roomJid
+{
+    NSManagedObject* obj = [self findContactByJid:[contact jid] withRoomJid:roomJid];
+    [obj setValue:[NSNumber numberWithLong:[contact presence]] forKey:@"presence"];
+}
+
 - (void) updateRoomContacts:(NSMutableArray*) mucRoomContacts withRoomJid:(NSString*) roomJid
 {
     NSManagedObject* room = [self findRoomByJid:roomJid];
@@ -145,8 +151,8 @@
     }
     for (NSDictionary* contactInfo in mucRoomContacts) {
         NSString* jid = [[NSString alloc ] initWithFormat:@"%@", [contactInfo valueForKey:@"uid"]];
-        NSManagedObject* contact = [self findContactByJid:jid withRoomJid:roomJid];
-        if (!contact) {
+        NSManagedObject* obj = [self findContactByJid:jid withRoomJid:roomJid];
+        if (!obj) {
             MUCRoomContactItem* item = [[MUCRoomContactItem alloc] init];
             [item setName:[contactInfo valueForKey:@"nickname"]];
             [item setJid:jid];
@@ -157,10 +163,16 @@
     }
 }
 
+- (void) setValue:(id)value forKey:(NSString*)key intoManagedObject:(NSManagedObject*) obj
+{
+    if (value && [value length]) {
+        [obj setValue:value forKey:key];
+    }
+}
+
 - (void) insertRoomContact:(MUCRoomContactItem*) contact withRoomJid:(NSString*) roomJid
 {
-    NSDictionary* dic = [NSDictionary dictionaryWithObjectsAndKeys:[contact name], @"name", [contact jid], @"jid", nil];
-    //NSLog(@"%@", dic);
+    NSDictionary* dic = [NSDictionary dictionaryWithObjectsAndKeys:[contact name], @"name", [contact jid], @"jid", [NSNumber numberWithInteger:[contact presence]], @"presence", nil];
     NSManagedObject *obj = [NSEntityDescription insertNewObjectForEntityForName:@"RoomContact" inManagedObjectContext:self];
     [obj setValuesForKeysWithDictionary: dic];
     NSManagedObject* parent = [self findRoomByJid: roomJid];

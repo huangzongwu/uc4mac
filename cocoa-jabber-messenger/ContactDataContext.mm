@@ -191,8 +191,8 @@
 - (NSInteger) setPresence:(NSInteger) presence intoManagedObject:(NSManagedObject*) obj
 {
     NSNumber* oldPresence = [obj valueForKey:@"presence"];
-    if ( presence == PRESENCE_UNKNOWN ) {
-        return[oldPresence integerValue];
+    if (presence == PRESENCE_UNKNOWN) {
+        return [oldPresence integerValue];
     }
     
     NSString* groupInto;
@@ -206,7 +206,7 @@
     if ([groupInto isEqualToString:parentName])
     {
         // group is not changed. so return
-        return[oldPresence integerValue];
+        return [oldPresence integerValue];
     }
     
     NSManagedObject* parentObj = [self findGroup:groupInto];
@@ -215,7 +215,7 @@
     }
     NSMutableSet *groupContacts = [parentObj mutableSetValueForKey:@"children"];        
     [groupContacts addObject:obj];
-    return[oldPresence integerValue];
+    return [oldPresence integerValue];
 }
 
 - (NSString*) groupNameByContact:(ContactItem*) contact
@@ -240,31 +240,9 @@
     [self setValue:[contact photo] forKey:@"image" intoManagedObject:obj];
     [self setValue:[contact pinyin] forKey:@"pinyin" intoManagedObject:obj];
     [self setValue:group forKey:@"group" intoManagedObject:obj];
-    NSInteger oldPresence = [self setPresence:[contact presence] intoManagedObject:obj];
-    
-	if([NSApp isActive]) {
-        return;
-    }
-    if ([contact presence] == PRESENCE_UNKNOWN) {
-        return;
-    }
-    BOOL notify = NO;
-    if ((oldPresence == PRESENCE_OFFLINE || oldPresence == PRESENCE_UNKNOWN)) {
-        if ( [contact presence] != PRESENCE_OFFLINE ) {
-            notify = YES;
-        }
-    } else if ([contact presence] == PRESENCE_OFFLINE ) {
-        notify = YES;
-    }
-    if (notify) {
-        if (![[contact name]length]) {
-            [contact setName:[obj valueForKey:@"name"]];
-        }
-        if (![[contact name]length]) {
-            [contact setName:[obj valueForKey:@"jid"]];
-        }
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"contactStatus" object:contact] ;
-    }
+    [obj setValue:[NSNumber numberWithLong:[contact presence]] forKey:@"presence"];
+    //[self setPresence:[contact presence] intoManagedObject:obj];
+    //删除上线提醒，根本不需要
 }
 
 
@@ -322,9 +300,9 @@
         [fileManager createDirectoryAtPath:applicationSupportFolder withIntermediateDirectories:YES attributes:nil error:nil];
     }
     url = [NSURL fileURLWithPath: [applicationSupportFolder stringByAppendingPathComponent: @"ContactsCoreData.xml"]];
-    if (![fileManager removeItemAtURL:url error:&error]) {
+    /*if (![fileManager removeItemAtURL:url error:&error]) {
         NSLog(@"Fail to clean contacts");
-    };
+    };*/
     persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel: [self managedObjectModel]];
     if (![persistentStoreCoordinator addPersistentStoreWithType:NSXMLStoreType configuration:nil URL:url options:nil error:&error]){
         [[NSApplication sharedApplication] presentError:error];

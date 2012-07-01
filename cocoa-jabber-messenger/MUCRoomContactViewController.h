@@ -11,15 +11,15 @@
 @class XMPPMUCRoom;
 @class MUCRoomContactDataContext;
 @class MUCRoomContactItem;
+@class MUCRoomDataContext;
 @interface MUCRoomContactViewController : NSViewController <NSTableViewDelegate, NSTableViewDataSource> {
 @private
     IBOutlet NSTableView* contactList;
     IBOutlet NSArrayController* arrayController;
+    IBOutlet MUCRoomDataContext* mucRoomDataContext;
 }
 
 @property (nonatomic, assign) XMPPMUCRoom* room;
 @property (nonatomic, retain) NSMutableArray* contacts;
 
-- (void) initContacts:(NSArray*) mucRoomContacts;
-- (void) updateContact:(MUCRoomContactItem*) mucRoomContact; 
 @end

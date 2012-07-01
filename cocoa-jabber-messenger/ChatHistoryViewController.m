@@ -115,7 +115,6 @@
 
 - (IBAction) onDoubleClick:(id) sender
 {
-    NSLog(@"clicked");
     //NSText *textEditor;
     NSInteger index = [sender selectedRow];
     [sender editColumn:1 row:index withEvent:nil select:YES];

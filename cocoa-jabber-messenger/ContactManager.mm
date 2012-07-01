@@ -43,7 +43,6 @@
 {
     [info release];
     [contacts release];
-    NSLog(@"ContactGroup destroied");
 }
 
 - (void) updateContact:(ContactItem*) item
@@ -100,7 +99,6 @@
 - (void) dealloc
 {
     [groups release];
-    NSLog(@"ContactGroup destroied");
 }
 
 - (ContactGroup*)groupByName:(NSString*) name

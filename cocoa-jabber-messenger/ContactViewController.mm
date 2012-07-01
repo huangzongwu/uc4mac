@@ -63,8 +63,6 @@
         NSString* jid = [object valueForKey:@"jid"];
         if (!jid) {
             return;
-        } else {
-            NSLog(@"jid: %@", jid);
         }
         [xmpp startChat:jid];
     }

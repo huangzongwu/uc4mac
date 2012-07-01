@@ -33,8 +33,8 @@
         [self setStatus:@""];
         [self setKey:@""];
         [self setPinyin:@""];
-        [self setPresence:PRESENCE_UNKNOWN];
-        [self setOnline:YES];
+        [self setPresence:PRESENCE_OFFLINE];
+        [self setOnline:NO];
     }
     return self;
 }

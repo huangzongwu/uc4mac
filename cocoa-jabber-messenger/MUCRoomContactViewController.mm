@@ -11,6 +11,7 @@
 #import "MUCRoomContactItem.h"
 #import "XMPPMUCRoom.h"
 #import "XMPP.h"
+#import "MUCRoomDataContext.h"
 
 @implementation MUCRoomContactViewController
 @synthesize room;
@@ -18,7 +19,6 @@
 
 - (void) awakeFromNib
 {
-    NSLog(@"awake from nib");
     [contactList setIntercellSpacing:NSMakeSize(0,0)];
     [contactList setTarget:self];
     [contactList setDoubleAction:@selector(onDoubleClick:)];
@@ -31,7 +31,6 @@
 - (void) dealloc
 {
     [contacts release];
-    NSLog(@"dealloc of contact view controller");
 }
 
 - (void) onDoubleClick:(id)sender
@@ -44,33 +43,12 @@
     [[room xmpp] startChat:jid];
 }
 
-- (void) updateContact:(MUCRoomContactItem*) mucRoomContact
+- (void) setRoom:(XMPPMUCRoom*) _room
 {
-    for (MUCRoomContactItem* item in contacts) {
-        if ([[mucRoomContact jid] isEqualToString:[item jid]]) {
-            [contacts replaceObjectAtIndex:[contacts indexOfObject:item] withObject:mucRoomContact];
-        }
-    }
-    [contactList reloadData];
-}
-
-- (void) initContacts:(NSArray*) mucRoomContacts
-{
-    for (NSManagedObject* contact in mucRoomContacts){
-        MUCRoomContactItem* item = [[MUCRoomContactItem alloc] init];
-        [item setJid: [contact valueForKey:@"jid"]];
-        [item setName: [contact valueForKey:@"name"]];
-        [self willChangeValueForKey:@"contacts"];
-        [contacts addObject:item];
-        [self didChangeValueForKey:@"contacts"];
-        [item release];
-    }
-}
-
-- (NSInteger) numberOfRowsInTableView:(NSTableView *) aTableView
-{
-    NSLog(@"%@", [room jid]);
-	return [contacts count];
+    room = _room;
+    [self willChangeValueForKey:@"contacts"];
+    [contacts addObjectsFromArray:[mucRoomDataContext getContactsByRoomJid:[_room jid]]];
+    [self didChangeValueForKey:@"contacts"];
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex

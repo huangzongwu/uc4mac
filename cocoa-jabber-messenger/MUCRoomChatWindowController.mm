@@ -56,16 +56,6 @@
 	return YES;
 }
 
-- (void) initContacts:(NSArray*) contacts
-{
-    [mucRoomContactViewController initContacts:contacts];
-}
-
-- (void) updateContac:(MUCRoomContactItem*) contact
-{
-    [mucRoomContactViewController updateContact:contact];
-}
-
 - (void) setRoom:(XMPPMUCRoom *)_room
 {
     [room release];

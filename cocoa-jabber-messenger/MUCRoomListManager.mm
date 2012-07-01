@@ -43,7 +43,6 @@
 {
     [info release];
     [rooms release];
-    NSLog(@"MUCRoomGroup destroied");
 }
 
 - (void) updateRoom:(MUCRoomItem*) item

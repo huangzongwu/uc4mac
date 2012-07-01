@@ -148,10 +148,9 @@ bool    CMUCRoomEventHandler::handleMUCRoomDestruction( gloox::MUCRoom* room )
 - (void) close
 {
     chatWindowCreated = NO;
-    NSLog(@"room closed");
 }
 
-- (void) createChatWindowWithDataObject:(NSManagedObject*) obj withContacts:(NSArray*) contacts
+- (void) createChatWindowWithDataObject:(NSManagedObject*) obj
 {
     //create chat window
     dataObject = [obj retain];
@@ -169,13 +168,9 @@ bool    CMUCRoomEventHandler::handleMUCRoomDestruction( gloox::MUCRoom* room )
     if (![name length]) {
         name = jid;
     }
-    [name retain];
-    [jid retain];
     [windowController setTargetName:name];
     [windowController setTargetJid:jid];
     [windowController setRoom:self];
-    [windowController initContacts:contacts];
-    [contacts release];
     chatWindowCreated = YES;
 }
 
@@ -252,8 +247,8 @@ bool    CMUCRoomEventHandler::handleMUCRoomDestruction( gloox::MUCRoom* room )
             if (!obj) {
                 return NO;
             }
-            NSArray* contacts = [[NSArray alloc] initWithArray:[mucRoomDataContxt getContactsByRoomJid:roomJid]];               
-            [[rooms objectForKey:roomJid] createChatWindowWithDataObject:obj withContacts:contacts];
+            //NSArray* contacts = [[NSArray alloc] initWithArray:[mucRoomDataContxt getContactsByRoomJid:roomJid]];               
+            [[rooms objectForKey:roomJid] createChatWindowWithDataObject:obj];
         }
         return YES;
     }
@@ -269,6 +264,11 @@ bool    CMUCRoomEventHandler::handleMUCRoomDestruction( gloox::MUCRoom* room )
      [roomItem setNotice:[room notice]];*/
     [mucRoomDataContxt updateRoom:roomItem];
     [roomItem release];
+}
+
+- (void) udpateContact:(MUCRoomContactItem*) contact
+{
+    
 }
 
 - (void) updateRoomContacts:(NSMutableArray*) contacts withRoomJid:(NSString*) roomJid

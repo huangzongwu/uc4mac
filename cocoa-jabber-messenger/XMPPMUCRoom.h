@@ -38,7 +38,7 @@ class CMUCRoomEventHandler;
 @property (assign) NSString* gid;
 @property (assign) NSString* name;
 
-- (void) createChatWindowWithDataObject:(NSManagedObject*) obj withContacts:(NSArray*) contacts;
+- (void) createChatWindowWithDataObject:(NSManagedObject*) obj;
 - (BOOL) sendMessage:(MessageItem*) item;
 - (void) handleMessage:(MUCRoomMessageItem*) msg;
 - (void) close;
