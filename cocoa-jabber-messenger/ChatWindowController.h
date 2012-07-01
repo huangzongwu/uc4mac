@@ -41,7 +41,7 @@
 @property (nonatomic, retain) NSString* targetName;
 @property (nonatomic, retain) NSString* targetJid;
 
-- (void) vcardUpdate:(ContactItem*) item;
+- (void) vcardUpdate:(ContactItem*) contact;
 - (void) registerSession:(XMPPSession*) session;
 - (void) onMessageReceived:(MessageItem*) msg;
 - (IBAction) send:(id) sender;

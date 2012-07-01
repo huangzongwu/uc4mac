@@ -9,21 +9,10 @@
 #import "MUCRoomContactItem.h"
 
 @implementation MUCRoomContactItem
-@synthesize key;
-@synthesize name;
-@synthesize jid;
-@synthesize photo;
-@synthesize image;
 
 - (id)init
 {
     self = [super init];
-    if (self) {
-        // Initialization code here.
-        [self setName:@""];
-        [self setJid:@""];
-        [self setKey:@""];
-    }
     return self;
 }
 

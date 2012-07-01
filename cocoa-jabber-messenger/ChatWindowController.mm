@@ -248,12 +248,12 @@
     [chatListCtrl reloadData];
 }
 
-- (void) vcardUpdate:(ContactItem*) item;
+- (void) vcardUpdate:(ContactItem*) contact;
 {
-    if ([[item jid] isEqualToString: [self targetJid]]) {
-        NSImage* image = [[NSImage alloc] initWithData:[item photo]];
+    if ([[contact jid] isEqualToString: [self targetJid]]) {
+        NSImage* image = [[NSImage alloc] initWithData:[contact photo]];
         [self setTargetImage: image];
-        [self setTargetName: [item name]];
+        [self setTargetName: [contact name]];
     }
 }
 

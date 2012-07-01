@@ -10,6 +10,7 @@
 
 @class XMPP;
 @class XMPPMUCRoom;
+@class MUCRoomContactItem;
 @class MUCRoomMessageItem;
 @class MUCRoomContactViewController;
 @class MUCRoomHistoryWindowController;
@@ -26,21 +27,17 @@
     IBOutlet MUCRoomContactViewController* mucRoomContactViewController;
     IBOutlet MUCRoomDataContext* mucRoomDataContext;
 	NSMutableArray*	messageArray;
-	NSImage* targetImage;
-	NSImage* myImage;
-    NSString* targetName;
-    NSString* targetJid;
-    XMPPMUCRoom* room;
     MUCRoomHistoryWindowController* historyWindowController;
 }
 
-@property (assign) XMPPMUCRoom* room;
+@property (nonatomic, assign) XMPPMUCRoom* room;
 @property (nonatomic, retain) NSImage* targetImage;
 @property (nonatomic, retain) NSImage* myImage;
 @property (nonatomic, retain) NSString* targetName;
 @property (nonatomic, retain) NSString* targetJid;
 
-- (void) updateContacts:(NSArray*) contacts;
+- (void) initContacts:(NSArray*) contacts;
+- (void) updateContact:(MUCRoomContactItem*) contact;
 - (void) onMessageReceived:(MUCRoomMessageItem*) msg;
 - (IBAction) send:(id) sender;
 - (IBAction) copy:(id) sender;

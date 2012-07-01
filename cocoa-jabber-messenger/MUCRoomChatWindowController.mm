@@ -56,10 +56,21 @@
 	return YES;
 }
 
-- (void) updateContacts:(NSArray*) contacts
+- (void) initContacts:(NSArray*) contacts
 {
-    [mucRoomContactViewController setXmpp:[room xmpp]];
-    [mucRoomContactViewController updateContacts:contacts];
+    [mucRoomContactViewController initContacts:contacts];
+}
+
+- (void) updateContac:(MUCRoomContactItem*) contact
+{
+    [mucRoomContactViewController updateContact:contact];
+}
+
+- (void) setRoom:(XMPPMUCRoom *)_room
+{
+    [room release];
+    room = _room;
+    [mucRoomContactViewController setRoom:_room];
 }
 
 - (void) setTargetJid:(NSString *)_targetJid
@@ -104,7 +115,6 @@
 - (void) dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [mucRoomContactViewController dealloc];
     [messageArray removeAllObjects];
 	[messageArray release];
     [targetJid release];

@@ -7,21 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ContactItem.h"
 
-@interface MUCRoomContactItem : NSObject 
-{
-@private
-    NSString* key;
-    NSString* name;
-    NSString* jid;
-    NSData* photo;
-    NSImage* image;
-}
-
-@property (nonatomic, retain) NSString* key;
-@property (nonatomic, retain) NSString* name;
-@property (nonatomic, retain) NSString* jid;
-@property (nonatomic, retain) NSData* photo;
-@property (nonatomic, retain) NSImage* image;
+@class ContactItem;
+@interface MUCRoomContactItem : ContactItem 
 
 @end

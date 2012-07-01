@@ -7,10 +7,13 @@
 //
 
 #import "MUCRoomContactViewController.h"
+#import "ContactItem.h"
+#import "MUCRoomContactItem.h"
+#import "XMPPMUCRoom.h"
 #import "XMPP.h"
 
 @implementation MUCRoomContactViewController
-@synthesize xmpp;
+@synthesize room;
 @synthesize contacts;
 
 - (void) awakeFromNib
@@ -19,6 +22,8 @@
     [contactList setIntercellSpacing:NSMakeSize(0,0)];
     [contactList setTarget:self];
     [contactList setDoubleAction:@selector(onDoubleClick:)];
+    [contactList setDelegate:self];
+    [contactList setDataSource:self];
     //[contactList setAction:@selector(onClick:)];
     contacts = [[NSMutableArray alloc] init];
 }
@@ -36,10 +41,20 @@
         return;
     }
     NSString* jid = [NSString stringWithFormat:@"%@@uc.sina.com.cn", [obj valueForKey:@"jid"]];
-    [xmpp startChat:jid];
+    [[room xmpp] startChat:jid];
 }
 
-- (void) updateContacts:(NSArray*) mucRoomContacts
+- (void) updateContact:(MUCRoomContactItem*) mucRoomContact
+{
+    for (MUCRoomContactItem* item in contacts) {
+        if ([[mucRoomContact jid] isEqualToString:[item jid]]) {
+            [contacts replaceObjectAtIndex:[contacts indexOfObject:item] withObject:mucRoomContact];
+        }
+    }
+    [contactList reloadData];
+}
+
+- (void) initContacts:(NSArray*) mucRoomContacts
 {
     for (NSManagedObject* contact in mucRoomContacts){
         MUCRoomContactItem* item = [[MUCRoomContactItem alloc] init];
@@ -50,6 +65,23 @@
         [self didChangeValueForKey:@"contacts"];
         [item release];
     }
+}
+
+- (NSInteger) numberOfRowsInTableView:(NSTableView *) aTableView
+{
+    NSLog(@"%@", [room jid]);
+	return [contacts count];
+}
+
+- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
+{
+	MUCRoomContactItem* item = [contacts objectAtIndex:rowIndex];
+    if ([[aTableColumn identifier] isEqualToString:@"status"]) {
+        return [ContactItem statusImage:[[item valueForKey:@"presence"] integerValue]];
+    } else if ([[aTableColumn identifier]isEqualToString:@"name"]) {
+        return [item valueForKey:@"name"];
+    } 
+	return @"";
 }
 
 @end

@@ -7,19 +7,19 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "MUCRoomContactItem.h"
 
-@class XMPP;
+@class XMPPMUCRoom;
 @class MUCRoomContactDataContext;
-@interface MUCRoomContactViewController : NSViewController {
+@class MUCRoomContactItem;
+@interface MUCRoomContactViewController : NSViewController <NSTableViewDelegate, NSTableViewDataSource> {
 @private
-    XMPP* xmpp;
     IBOutlet NSTableView* contactList;
     IBOutlet NSArrayController* arrayController;
 }
 
-@property (assign) XMPP* xmpp;
-@property (assign) NSMutableArray* contacts;
+@property (nonatomic, assign) XMPPMUCRoom* room;
+@property (nonatomic, retain) NSMutableArray* contacts;
 
-- (void) updateContacts:(NSArray*) mucRoomContacts;
+- (void) initContacts:(NSArray*) mucRoomContacts;
+- (void) updateContact:(MUCRoomContactItem*) mucRoomContact; 
 @end

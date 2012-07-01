@@ -38,4 +38,7 @@
 @property (assign) NSInteger presence;
 @property (assign) BOOL online;
 @property (assign) BOOL vcard;
+
++ (NSString*) statusImage:(NSInteger) presence;
+
 @end

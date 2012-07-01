@@ -64,10 +64,10 @@
 - (void) contactStatus:(NSNotification*) notification
 {
     
-    ContactItem*  item = [notification object];
+    ContactItem* contact = [notification object];
     NSString* type;
     NSString* message;
-    switch ([item presence]) {
+    switch ([contact presence]) {
         case 5:
             type = NOTIFICATION_CONTACT_SIGNOFF;
             message = @"has just logged off.";
@@ -83,7 +83,7 @@
             break;
     }
     
-    [growl alertWithType:type message:message title:[item name]];
+    [growl alertWithType:type message:message title:[contact name]];
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication*) theApplication hasVisibleWindows:(BOOL) flag {

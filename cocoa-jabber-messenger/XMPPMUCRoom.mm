@@ -90,6 +90,7 @@ void    CMUCRoomEventHandler::handleMUCMessage(gloox::MUCRoom* room, const gloox
 
 void    CMUCRoomEventHandler::handleMUCParticipantPresence( gloox::MUCRoom * room, const gloox::MUCRoomParticipant participant, const gloox::Presence& presence )
 {
+    //[m_pRoomManager performSelectorOnMainThread:@selector(activateRoom:) withObject:roomJid waitUntilDone:NO];
 }
 
 void    CMUCRoomEventHandler::handleMUCSubject( gloox::MUCRoom* room, const std::string& nick, const std::string& subject )
@@ -173,7 +174,7 @@ bool    CMUCRoomEventHandler::handleMUCRoomDestruction( gloox::MUCRoom* room )
     [windowController setTargetName:name];
     [windowController setTargetJid:jid];
     [windowController setRoom:self];
-    [windowController updateContacts:contacts];
+    [windowController initContacts:contacts];
     [contacts release];
     chatWindowCreated = YES;
 }

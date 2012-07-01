@@ -11,7 +11,6 @@
 #import "XMPP.h"
 #import "ContactItem.h"
 #import "ContactManager.h"
-#include "presence.h"
 #import "ContactDataContext.h"
 
 #pragma mark *** ContactViewController ***
@@ -128,52 +127,6 @@
 	return 0;
 }
 
-- (NSString*) statusImage:(NSInteger) presence
-{
-    switch (presence) {
-        case gloox::Presence::Available:
-            return [NSImage imageNamed:@"status_online.png"];
-            break;
-            
-        /*case gloox::Presence::Chat:
-            return [NSString stringWithString:@"Chat"];
-            break;*/
-            
-        case gloox::Presence::Away:
-            return [NSImage imageNamed:@"status_hide.png"];
-            break;
-            
-        case gloox::Presence::DND:
-            return [NSImage imageNamed:@"status_busy.png"];
-            break;
-            
-        /*case gloox::Presence::XA:
-            return [NSString stringWithString:@"Away for an extended period of time"];
-            break;*/
-            
-        case gloox::Presence::Unavailable:
-            return [NSImage imageNamed:@"status_offline.png"];
-            break;
-            
-        /*case gloox::Presence::Probe:
-            return [NSString stringWithString:@"Probe"];
-            break;
-            
-        case gloox::Presence::Error:
-            return [NSString stringWithString:@"Error"];
-            break;*/
-            
-        case PRESENCE_UNKNOWN:
-            return [NSImage imageNamed:@"status_offline.png"];
-            break;    
-            
-        default:
-            return [NSImage imageNamed:@"status_offline.png"];
-            break;
-    }
-    
-}
-
 - (id) outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
 {
     NSManagedObject* obj = [item representedObject];
@@ -196,7 +149,7 @@
         return [obj valueForKey:@"name"];
     }
     if ([[tableColumn identifier] isEqualToString:@"status"]) {
-        return [self statusImage:[[obj valueForKey:@"presence"] integerValue]];
+        return [ContactItem statusImage:[[obj valueForKey:@"presence"] integerValue]];
     }
     return nil;
 }
