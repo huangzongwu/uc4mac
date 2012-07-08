@@ -33,7 +33,7 @@
     [contactList setDataSource:self];
 }
 
-- (void)dealloc
+- (void) dealloc
 {
     [groupManager release];
     [iGroupRowCell release];
@@ -95,7 +95,7 @@
 #pragma mark -
 #pragma mark *** outlineView dataset ***
 
-- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
+- (id) outlineView:(NSOutlineView*) outlineView child:(NSInteger) index ofItem:(id) item
 {
     if (item == nil) {
 		return [[groupManager groups] objectAtIndex:index];
@@ -106,7 +106,7 @@
     return nil;
 }
 
-- (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
+- (BOOL) outlineView:(NSOutlineView*) outlineView isItemExpandable:(id) item
 {
     if ([item isKindOfClass:[ContactGroup class]]) {
         return YES;
@@ -114,7 +114,7 @@
 	return NO;    
 }
 
-- (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
+- (NSInteger) outlineView:(NSOutlineView*) outlineView numberOfChildrenOfItem:(id) item
 {
 	if (item == nil) {
 		return [[groupManager groups] count];
@@ -125,7 +125,7 @@
 	return 0;
 }
 
-- (id) outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
+- (id) outlineView:(NSOutlineView* )outlineView objectValueForTableColumn:(NSTableColumn*)tableColumn byItem:(id) item
 {
     NSManagedObject* obj = [item representedObject];
     BOOL group = [[[obj entity] name] isEqualToString:@"ContactGroup"];
@@ -152,7 +152,7 @@
     return nil;
 }
 
-- (NSCell *) outlineView:(NSOutlineView *)outlineView dataCellForTableColumn:(NSTableColumn *)tableColumn item:(id)item
+- (NSCell*) outlineView:(NSOutlineView*) outlineView dataCellForTableColumn:(NSTableColumn*)tableColumn item:(id) item
 {
     if (tableColumn == nil) {
         NSManagedObject* obj = [item representedObject];
@@ -161,7 +161,8 @@
 	return nil;
 }
 
-- (BOOL)outlineView:(NSOutlineView *)outlineView isGroupItem:(id)item {
+- (BOOL) outlineView:(NSOutlineView*) outlineView isGroupItem:(id) item 
+{
     NSManagedObject* obj = [item representedObject];
     if ([[[obj entity] name] isEqualToString:@"ContactGroup"]) {
         return YES;
@@ -169,7 +170,7 @@
     return NO;
 }
 
-- (CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
+- (CGFloat) outlineView:(NSOutlineView*) outlineView heightOfRowByItem:(id) item
 {
     NSManagedObject* obj = [item representedObject];
     return [[[obj entity] name] isEqualToString:@"ContactGroup"] ? 20 : [contactList rowHeight];

@@ -1430,6 +1430,7 @@
 									<string key="NSFrame">{{103, 12}, {96, 32}}</string>
 									<reference key="NSSuperview" ref="103780107"/>
 									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView"/>
 									<int key="NSViewLayerContentsRedrawPolicy">2</int>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="143449548">
@@ -1801,13 +1802,14 @@
 														<int key="NSvFlags">18</int>
 														<string key="NSFrameSize">{285, 354}</string>
 														<reference key="NSSuperview" ref="744053675"/>
+														<reference key="NSNextKeyView" ref="471234508"/>
 														<string key="NSReuseIdentifierKey">_NS:608</string>
 														<object class="NSMutableArray" key="NSTabViewItems">
 															<bool key="EncodedWithXMLCoder">YES</bool>
 															<object class="NSTabViewItem" id="93595916">
 																<string key="NSIdentifier">0</string>
 																<object class="NSView" key="NSView" id="943529596">
-																	<reference key="NSNextResponder" ref="648658743"/>
+																	<nil key="NSNextResponder"/>
 																	<int key="NSvFlags">256</int>
 																	<object class="NSMutableArray" key="NSSubviews">
 																		<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1826,7 +1828,7 @@
 																							<int key="NSvFlags">4352</int>
 																							<string key="NSFrameSize">{286, 354}</string>
 																							<reference key="NSSuperview" ref="608145561"/>
-																							<reference key="NSNextKeyView" ref="379508880"/>
+																							<reference key="NSNextKeyView" ref="368907537"/>
 																							<bool key="NSEnabled">YES</bool>
 																							<object class="_NSCornerView" key="NSCornerView">
 																								<nil key="NSNextResponder"/>
@@ -1963,7 +1965,7 @@
 																								</object>
 																							</object>
 																							<double key="NSRowHeight">40</double>
-																							<int key="NSTvFlags">1390411776</int>
+																							<int key="NSTvFlags">1382023168</int>
 																							<reference key="NSDelegate"/>
 																							<reference key="NSDataSource"/>
 																							<int key="NSColumnAutoresizingStyle">4</int>
@@ -2009,7 +2011,7 @@
 																			</object>
 																			<string key="NSFrameSize">{285, 354}</string>
 																			<reference key="NSSuperview" ref="943529596"/>
-																			<reference key="NSNextKeyView" ref="608145561"/>
+																			<reference key="NSNextKeyView" ref="379508880"/>
 																			<int key="NSsFlags">133760</int>
 																			<reference key="NSVScroller" ref="379508880"/>
 																			<reference key="NSHScroller" ref="1027163992"/>
@@ -2018,7 +2020,6 @@
 																		</object>
 																	</object>
 																	<string key="NSFrameSize">{285, 354}</string>
-																	<reference key="NSSuperview" ref="648658743"/>
 																	<reference key="NSNextKeyView" ref="577471783"/>
 																	<string key="NSReuseIdentifierKey">_NS:610</string>
 																</object>
@@ -2029,7 +2030,7 @@
 															<object class="NSTabViewItem" id="677188971">
 																<string key="NSIdentifier">1</string>
 																<object class="NSView" key="NSView" id="471234508">
-																	<nil key="NSNextResponder"/>
+																	<reference key="NSNextResponder" ref="648658743"/>
 																	<int key="NSvFlags">256</int>
 																	<object class="NSMutableArray" key="NSSubviews">
 																		<bool key="EncodedWithXMLCoder">YES</bool>
@@ -2048,7 +2049,7 @@
 																							<int key="NSvFlags">256</int>
 																							<string key="NSFrameSize">{286, 352}</string>
 																							<reference key="NSSuperview" ref="904111130"/>
-																							<reference key="NSNextKeyView" ref="448871975"/>
+																							<reference key="NSNextKeyView" ref="648658743"/>
 																							<string key="NSReuseIdentifierKey">_NS:1828</string>
 																							<bool key="NSEnabled">YES</bool>
 																							<object class="_NSCornerView" key="NSCornerView">
@@ -2151,7 +2152,7 @@
 																							<reference key="NSBackgroundColor" ref="447540211"/>
 																							<reference key="NSGridColor" ref="56881206"/>
 																							<double key="NSRowHeight">42</double>
-																							<int key="NSTvFlags">-692060160</int>
+																							<int key="NSTvFlags">-767557632</int>
 																							<reference key="NSDelegate"/>
 																							<reference key="NSDataSource"/>
 																							<int key="NSColumnAutoresizingStyle">4</int>
@@ -2197,7 +2198,7 @@
 																			</object>
 																			<string key="NSFrameSize">{285, 354}</string>
 																			<reference key="NSSuperview" ref="471234508"/>
-																			<reference key="NSNextKeyView" ref="904111130"/>
+																			<reference key="NSNextKeyView" ref="448871975"/>
 																			<string key="NSReuseIdentifierKey">_NS:1824</string>
 																			<int key="NSsFlags">133762</int>
 																			<reference key="NSVScroller" ref="448871975"/>
@@ -2207,6 +2208,7 @@
 																		</object>
 																	</object>
 																	<string key="NSFrameSize">{285, 354}</string>
+																	<reference key="NSSuperview" ref="648658743"/>
 																	<reference key="NSNextKeyView" ref="235341794"/>
 																	<string key="NSReuseIdentifierKey">_NS:620</string>
 																</object>
@@ -2215,14 +2217,14 @@
 																<reference key="NSTabView" ref="648658743"/>
 															</object>
 														</object>
-														<reference key="NSSelectedTabViewItem" ref="93595916"/>
+														<reference key="NSSelectedTabViewItem" ref="677188971"/>
 														<reference key="NSFont" ref="269168230"/>
 														<int key="NSTvFlags">6</int>
 														<bool key="NSAllowTruncatedLabels">YES</bool>
 														<bool key="NSDrawsBackground">YES</bool>
 														<object class="NSMutableArray" key="NSSubviews">
 															<bool key="EncodedWithXMLCoder">YES</bool>
-															<reference ref="943529596"/>
+															<reference ref="471234508"/>
 														</object>
 													</object>
 												</object>
@@ -2333,7 +2335,7 @@
 																		<reference key="NSBackgroundColor" ref="447540211"/>
 																		<reference key="NSGridColor" ref="56881206"/>
 																		<double key="NSRowHeight">40</double>
-																		<int key="NSTvFlags">1388314624</int>
+																		<int key="NSTvFlags">1379926016</int>
 																		<reference key="NSDelegate"/>
 																		<reference key="NSDataSource"/>
 																		<int key="NSColumnAutoresizingStyle">4</int>
@@ -2434,7 +2436,7 @@
 					<reference key="NSNextKeyView" ref="829473184"/>
 					<int key="NSViewLayerContentsRedrawPolicy">2</int>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1366, 768}}</string>
+				<string key="NSScreenRect">{{0, 0}, {900, 1600}}</string>
 				<string key="NSMinSize">{285, 520}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
@@ -6395,11 +6397,13 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>arrayController</string>
 							<string>contactList</string>
+							<string>mucRoomDataContext</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>NSArrayController</string>
 							<string>NSTableView</string>
+							<string>MUCRoomDataContext</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -6408,6 +6412,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>arrayController</string>
 							<string>contactList</string>
+							<string>mucRoomDataContext</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -6418,6 +6423,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">contactList</string>
 								<string key="candidateClassName">NSTableView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">mucRoomDataContext</string>
+								<string key="candidateClassName">MUCRoomDataContext</string>
 							</object>
 						</object>
 					</object>

@@ -333,7 +333,7 @@ void    CXmpp::connect()
                 m_pVcardManager->fetchVCard(jid, this);
                 [vcardStack removeObjectAtIndex:0];
             }
-            if (i%9000 == 0) {
+            if (i%900 == 0) {
                 [[m_pDelegate tgtRequest] exchangeTgt];
                 i = 0;
             }

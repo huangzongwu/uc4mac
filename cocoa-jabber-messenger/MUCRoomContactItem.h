@@ -12,4 +12,6 @@
 @class ContactItem;
 @interface MUCRoomContactItem : ContactItem 
 
+@property (nonatomic, assign) NSString* roomJid;
+
 @end

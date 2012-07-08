@@ -25,17 +25,11 @@
     [contactList setDelegate:self];
     [contactList setDataSource:self];
     //[contactList setAction:@selector(onClick:)];
-    contacts = [[NSMutableArray alloc] init];
-}
-
-- (void) dealloc
-{
-    [contacts release];
 }
 
 - (void) onDoubleClick:(id)sender
 {
-    NSManagedObject* obj = [[arrayController arrangedObjects] objectAtIndex: [contactList selectedRow]];
+    NSManagedObject* obj = [[mucRoomDataContext getContactsByRoomJid:[room jid]] objectAtIndex: [contactList selectedRow]];
     if (!obj) {
         return;
     }
@@ -43,23 +37,30 @@
     [[room xmpp] startChat:jid];
 }
 
-- (void) setRoom:(XMPPMUCRoom*) _room
+- (void) refresh
 {
-    room = _room;
-    [self willChangeValueForKey:@"contacts"];
-    [contacts addObjectsFromArray:[mucRoomDataContext getContactsByRoomJid:[_room jid]]];
-    [self didChangeValueForKey:@"contacts"];
+    [contactList deselectRow:[contactList selectedRow]];
+    [contactList reloadData];
 }
 
-- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
+- (NSInteger) numberOfRowsInTableView:(NSTableView *) aTableView
 {
-	MUCRoomContactItem* item = [contacts objectAtIndex:rowIndex];
+    if (!room) {
+        return 0;
+    }
+    return [[mucRoomDataContext getContactsByRoomJid:[room jid]] count];
+}
+
+- (id) tableView:(NSTableView*) aTableView objectValueForTableColumn:(NSTableColumn*) aTableColumn row:(NSInteger) rowIndex
+{
+    MUCRoomContactItem* item = [[mucRoomDataContext getContactsByRoomJid:[room jid]] objectAtIndex:rowIndex];
+	 //= [contacts objectAtIndex:rowIndex];
     if ([[aTableColumn identifier] isEqualToString:@"status"]) {
         return [ContactItem statusImage:[[item valueForKey:@"presence"] integerValue]];
     } else if ([[aTableColumn identifier]isEqualToString:@"name"]) {
         return [item valueForKey:@"name"];
     } 
-	return @"";
+	return nil;
 }
 
 @end

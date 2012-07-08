@@ -49,7 +49,6 @@
     switch (presence) {
         case gloox::Presence::Available:
             return [NSImage imageNamed:@"status_online.png"];
-            break;
             
             /*case gloox::Presence::Chat:
              return [NSString stringWithString:@"Chat"];
@@ -57,11 +56,9 @@
             
         case gloox::Presence::Away:
             return [NSImage imageNamed:@"status_hide.png"];
-            break;
             
         case gloox::Presence::DND:
             return [NSImage imageNamed:@"status_busy.png"];
-            break;
             
             /*case gloox::Presence::XA:
              return [NSString stringWithString:@"Away for an extended period of time"];
@@ -69,7 +66,6 @@
             
         case gloox::Presence::Unavailable:
             return [NSImage imageNamed:@"status_offline.png"];
-            break;
             
             /*case gloox::Presence::Probe:
              return [NSString stringWithString:@"Probe"];
@@ -81,11 +77,9 @@
             
         case PRESENCE_UNKNOWN:
             return [NSImage imageNamed:@"status_offline.png"];
-            break;    
             
         default:
             return [NSImage imageNamed:@"status_offline.png"];
-            break;
     }
     
 }

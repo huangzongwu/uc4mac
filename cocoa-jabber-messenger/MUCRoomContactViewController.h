@@ -15,7 +15,6 @@
 @interface MUCRoomContactViewController : NSViewController <NSTableViewDelegate, NSTableViewDataSource> {
 @private
     IBOutlet NSTableView* contactList;
-    IBOutlet NSArrayController* arrayController;
     IBOutlet MUCRoomDataContext* mucRoomDataContext;
 }
 

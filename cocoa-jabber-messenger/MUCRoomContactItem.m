@@ -9,6 +9,7 @@
 #import "MUCRoomContactItem.h"
 
 @implementation MUCRoomContactItem
+@synthesize roomJid;
 
 - (id)init
 {

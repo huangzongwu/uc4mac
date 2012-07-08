@@ -133,14 +133,21 @@
     if (!obj) {
         return nil;
     } else {
-        return [[obj valueForKey:@"children"] allObjects];
+        NSSortDescriptor *statusSort = [NSSortDescriptor sortDescriptorWithKey:@"presence" ascending:YES];
+        NSSortDescriptor *nameSort = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
+        return [[[obj valueForKey:@"children"] allObjects] sortedArrayUsingDescriptors:[NSArray arrayWithObjects:statusSort, nameSort, nil]];
     }
 }
 
 - (void) updateRoomContact:(MUCRoomContactItem*) contact withRoomJid:(NSString*) roomJid
 {
     NSManagedObject* obj = [self findContactByJid:[contact jid] withRoomJid:roomJid];
+    if (!obj) {
+        return;
+    }
     [obj setValue:[NSNumber numberWithLong:[contact presence]] forKey:@"presence"];
+    NSError *saveError = nil;
+    [self save:&saveError];
 }
 
 - (void) updateRoomContacts:(NSMutableArray*) mucRoomContacts withRoomJid:(NSString*) roomJid

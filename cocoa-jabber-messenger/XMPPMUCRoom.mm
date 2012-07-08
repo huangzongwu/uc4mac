@@ -40,14 +40,14 @@ public:
     
 protected:
     virtual void 	handleMUCMessage (gloox::MUCRoom*, const gloox::Message&, bool priv);
-    virtual void    handleMUCParticipantPresence( gloox::MUCRoom * room, const gloox::MUCRoomParticipant participant, const gloox::Presence& presence );
-    virtual void    handleMUCSubject( gloox::MUCRoom* room, const std::string& nick, const std::string& subject );
-    virtual void    handleMUCError( gloox::MUCRoom* room, gloox::StanzaError error );
-    virtual void    handleMUCInfo( gloox::MUCRoom* room, int features, const std::string& name, const gloox::DataForm* infoForm );
-    virtual void    handleMUCItems( gloox::MUCRoom* room, const gloox::Disco::ItemList& items );
-    virtual void    handleMUCInviteDecline( gloox::MUCRoom* room, const gloox::JID& invitee, const std::string& reason );
-    virtual bool    handleMUCRoomCreation( gloox::MUCRoom* room );
-    virtual bool    handleMUCRoomDestruction( gloox::MUCRoom* room );
+    virtual void    handleMUCParticipantPresence(gloox::MUCRoom* room, const gloox::MUCRoomParticipant participant, const gloox::Presence& presence);
+    virtual void    handleMUCSubject(gloox::MUCRoom* room, const std::string& nick, const std::string& subject);
+    virtual void    handleMUCError(gloox::MUCRoom* room, gloox::StanzaError error);
+    virtual void    handleMUCInfo(gloox::MUCRoom* room, int features, const std::string& name, const gloox::DataForm* infoForm);
+    virtual void    handleMUCItems(gloox::MUCRoom* room, const gloox::Disco::ItemList& items );
+    virtual void    handleMUCInviteDecline(gloox::MUCRoom* room, const gloox::JID& invitee, const std::string& reason);
+    virtual bool    handleMUCRoomCreation(gloox::MUCRoom* room);
+    virtual bool    handleMUCRoomDestruction(gloox::MUCRoom* room);
     
 private:
     XMPPMUCRoomManager*     m_pRoomManager;
@@ -70,9 +70,7 @@ void    CMUCRoomEventHandler::handleMUCMessage(gloox::MUCRoom* room, const gloox
     NSString* senderJid = [[NSString alloc] initWithUTF8String:msg.from().resource().c_str()];
     
     if([senderJid isEqualToString:myJid] == NO){
-        NSString* roomJid = [[NSString alloc] initWithFormat:@"%@@group.uc.sina.com.cn/%@",  
-                             [NSString stringWithUTF8String:room->name().c_str()], 
-                             myJid];
+        NSString* roomJid = [NSString stringWithFormat:@"%@@group.uc.sina.com.cn/%@", [NSString stringWithUTF8String:room->name().c_str()], myJid];
         MUCRoomMessageItem * message = [[MUCRoomMessageItem alloc] init];
         [message setType:@"from"];
         [message setMessage:[NSString stringWithUTF8String:msg.body().c_str()]];
@@ -88,40 +86,46 @@ void    CMUCRoomEventHandler::handleMUCMessage(gloox::MUCRoom* room, const gloox
     [senderJid release];
 }
 
-void    CMUCRoomEventHandler::handleMUCParticipantPresence( gloox::MUCRoom * room, const gloox::MUCRoomParticipant participant, const gloox::Presence& presence )
+void    CMUCRoomEventHandler::handleMUCParticipantPresence(gloox::MUCRoom* room, const gloox::MUCRoomParticipant participant, const gloox::Presence& presence)
 {
-    //[m_pRoomManager performSelectorOnMainThread:@selector(activateRoom:) withObject:roomJid waitUntilDone:NO];
+    NSString* myJid = [NSString stringWithUTF8String:room->nick().c_str()];
+    NSString* roomJid = [NSString stringWithFormat:@"%@@group.uc.sina.com.cn/%@", [NSString stringWithUTF8String:room->name().c_str()], myJid];
+    MUCRoomContactItem* contact = [[MUCRoomContactItem alloc] init];
+    [contact setJid:[NSString stringWithUTF8String:participant.jid->username().c_str()]];
+    [contact setRoomJid:roomJid];
+    [contact setPresence:presence.subtype()];
+    [m_pRoomManager performSelectorOnMainThread:@selector(updateContact:) withObject:contact waitUntilDone:NO];
 }
 
-void    CMUCRoomEventHandler::handleMUCSubject( gloox::MUCRoom* room, const std::string& nick, const std::string& subject )
+void    CMUCRoomEventHandler::handleMUCSubject(gloox::MUCRoom* room, const std::string& nick, const std::string& subject)
 {
 }
 
-void    CMUCRoomEventHandler::handleMUCError( gloox::MUCRoom* room, gloox::StanzaError error )
+void    CMUCRoomEventHandler::handleMUCError(gloox::MUCRoom* room, gloox::StanzaError error)
 {
 }
 
-void    CMUCRoomEventHandler::handleMUCInfo( gloox::MUCRoom* room, int features, const std::string& name, const gloox::DataForm* infoForm )
+void    CMUCRoomEventHandler::handleMUCInfo(gloox::MUCRoom* room, int features, const std::string& name, const gloox::DataForm* infoForm)
 {
     NSLog(@"muc info!");
 }
 
-void    CMUCRoomEventHandler::handleMUCItems( gloox::MUCRoom* room, const gloox::Disco::ItemList& items )
+void    CMUCRoomEventHandler::handleMUCItems(gloox::MUCRoom* room, const gloox::Disco::ItemList& items)
 {
     NSLog(@"muc item!");
 }
 
-void    CMUCRoomEventHandler::handleMUCInviteDecline( gloox::MUCRoom* room, const gloox::JID& invitee, const std::string& reason )
+void    CMUCRoomEventHandler::handleMUCInviteDecline(gloox::MUCRoom* room, const gloox::JID& invitee, const std::string& reason)
 {
     NSLog(@"muc invite decline!");
 }
 
-bool    CMUCRoomEventHandler::handleMUCRoomCreation( gloox::MUCRoom* room )
+bool    CMUCRoomEventHandler::handleMUCRoomCreation(gloox::MUCRoom* room)
 {
     return true;
 }
 
-bool    CMUCRoomEventHandler::handleMUCRoomDestruction( gloox::MUCRoom* room )
+bool    CMUCRoomEventHandler::handleMUCRoomDestruction(gloox::MUCRoom* room)
 {
     return true;
 }
@@ -266,9 +270,9 @@ bool    CMUCRoomEventHandler::handleMUCRoomDestruction( gloox::MUCRoom* room )
     [roomItem release];
 }
 
-- (void) udpateContact:(MUCRoomContactItem*) contact
+- (void) updateContact:(MUCRoomContactItem*) contact
 {
-    
+    [mucRoomDataContxt updateRoomContact:contact withRoomJid:[contact roomJid]];
 }
 
 - (void) updateRoomContacts:(NSMutableArray*) contacts withRoomJid:(NSString*) roomJid

@@ -134,12 +134,13 @@
     [self addMessageItem:msg];
 }
 
--(IBAction)toggleRoomContacts:(id)sender
+-(IBAction) toggleRoomContacts:(id) sender
 {
     if ([roomContactsDrawer state] == NSDrawerOpenState || [roomContactsDrawer state] == NSDrawerOpeningState) {
         [roomContactsDrawer close];
         [sender setTag:0];
     } else {
+        [mucRoomContactViewController refresh];
         [roomContactsDrawer openOnEdge: NSMaxXEdge];
         [sender setTag:1];
     }
@@ -241,7 +242,7 @@
 	return @"";
 }
 
-- (IBAction)copy:(id)sender
+- (IBAction) copy:(id) sender
 {
     NSInteger index = [chatListCtrl selectedRow];
     if (index == -1) {

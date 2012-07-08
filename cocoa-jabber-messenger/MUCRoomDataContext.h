@@ -42,6 +42,8 @@
 //返回指定群组jid的全部联系人
 - (NSArray*) getContactsByRoomJid:(NSString*) roomJid;
 
+- (void) updateRoomContact:(MUCRoomContactItem*) contact withRoomJid:(NSString*) roomJid;
+
 //更新指定群组jid的联系人列表
 - (void) updateRoomContacts:(NSMutableArray*) mucRoomContacts withRoomJid:(NSString*) roomJid;
 

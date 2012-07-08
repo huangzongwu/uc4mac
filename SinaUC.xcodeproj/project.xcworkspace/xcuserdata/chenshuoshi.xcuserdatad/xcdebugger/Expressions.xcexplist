@@ -3,9 +3,6 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "(null):(null)">
-      </ContextState>
-      <ContextState
          contextName = "gloox::OpenSSLBase::decrypt(std::string const&amp;):tlsopensslbase.cpp">
       </ContextState>
       <ContextState

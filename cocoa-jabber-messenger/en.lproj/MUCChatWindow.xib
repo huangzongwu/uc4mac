@@ -12,25 +12,24 @@
 		</object>
 		<object class="NSArray" key="IBDocument.IntegratedClassDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<string>NSButton</string>
-			<string>NSCustomObject</string>
-			<string>NSArrayController</string>
-			<string>NSImageView</string>
-			<string>NSImageCell</string>
-			<string>NSViewController</string>
-			<string>NSTableView</string>
-			<string>NSCustomView</string>
 			<string>NSTextField</string>
-			<string>NSSearchField</string>
-			<string>NSSearchFieldCell</string>
-			<string>NSWindowTemplate</string>
-			<string>NSTextFieldCell</string>
-			<string>NSButtonCell</string>
-			<string>NSTableColumn</string>
-			<string>NSView</string>
-			<string>NSScrollView</string>
-			<string>NSManagedObjectContext</string>
+			<string>NSViewController</string>
 			<string>NSScroller</string>
+			<string>NSButton</string>
+			<string>NSScrollView</string>
+			<string>NSTextFieldCell</string>
+			<string>NSImageView</string>
+			<string>NSButtonCell</string>
+			<string>NSImageCell</string>
+			<string>NSTableView</string>
+			<string>NSSearchField</string>
+			<string>NSManagedObjectContext</string>
+			<string>NSSearchFieldCell</string>
+			<string>NSCustomView</string>
+			<string>NSCustomObject</string>
+			<string>NSView</string>
+			<string>NSWindowTemplate</string>
+			<string>NSTableColumn</string>
 			<string>NSDrawer</string>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
@@ -712,20 +711,6 @@
 				<nil key="NSDelegate"/>
 			</object>
 			<object class="NSViewController" id="524373713"/>
-			<object class="NSArrayController" id="342356172">
-				<string key="NSObjectClassName">NSMUCR</string>
-				<bool key="NSEditable">YES</bool>
-				<bool key="NSAutomaticallyPreparesContent">YES</bool>
-				<object class="_NSManagedProxy" key="_NSManagedProxy">
-					<string key="NSEntityName">RoomContact</string>
-				</object>
-				<bool key="_NSIsUsingManagedProxy">YES</bool>
-				<bool key="NSAvoidsEmptySelection">YES</bool>
-				<bool key="NSPreservesSelection">YES</bool>
-				<bool key="NSSelectsInsertedObjects">YES</bool>
-				<bool key="NSFilterRestrictsInsertion">YES</bool>
-				<bool key="NSClearsFilterPredicateOnInsertion">YES</bool>
-			</object>
 			<object class="NSManagedObjectContext" id="638879364">
 				<float key="NSFetchTimestamp">-1</float>
 				<bool key="NSRetainsRegisteredObjects">NO</bool>
@@ -876,26 +861,6 @@
 					<int key="connectionID">366</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: arrangedObjects.name</string>
-						<reference key="source" ref="372426666"/>
-						<reference key="destination" ref="342356172"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="372426666"/>
-							<reference key="NSDestination" ref="342356172"/>
-							<string key="NSLabel">value: arrangedObjects.name</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">arrangedObjects.name</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSConditionallySetsEditable</string>
-								<boolean value="YES" key="NS.object.0"/>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">384</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">contactList</string>
 						<reference key="source" ref="524373713"/>
@@ -913,35 +878,11 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">arrayController</string>
-						<reference key="source" ref="524373713"/>
-						<reference key="destination" ref="342356172"/>
-					</object>
-					<int key="connectionID">389</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">mucRoomDataContext</string>
 						<reference key="source" ref="524373713"/>
 						<reference key="destination" ref="638879364"/>
 					</object>
 					<int key="connectionID">410</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">contentArray: contacts</string>
-						<reference key="source" ref="342356172"/>
-						<reference key="destination" ref="524373713"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="342356172"/>
-							<reference key="NSDestination" ref="524373713"/>
-							<string key="NSLabel">contentArray: contacts</string>
-							<string key="NSBinding">contentArray</string>
-							<string key="NSKeyPath">contacts</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">388</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1270,12 +1211,6 @@
 						<reference key="object" ref="433458888"/>
 						<reference key="parent" ref="658448215"/>
 					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">373</int>
-						<reference key="object" ref="342356172"/>
-						<reference key="parent" ref="0"/>
-						<string key="objectName">Contacts Array Controller</string>
-					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -1316,7 +1251,6 @@
 					<string>250.CustomClassName</string>
 					<string>250.IBPluginDependency</string>
 					<string>32.IBPluginDependency</string>
-					<string>373.IBPluginDependency</string>
 					<string>38.IBPluginDependency</string>
 					<string>39.IBPluginDependency</string>
 					<string>392.IBPluginDependency</string>
@@ -1369,7 +1303,6 @@
 					<string>MUCRoomContactViewController</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>MUCRoomDataContext</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>

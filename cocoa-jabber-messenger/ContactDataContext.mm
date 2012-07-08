@@ -47,7 +47,7 @@
 
 @implementation ContactDataContext
 #pragma mark *** Coredata Management ***
-- (void)insertGroup:(NSString*)name
+- (void) insertGroup:(NSString*) name
 {
     NSDictionary* dic = [NSDictionary dictionaryWithObject:name forKey:@"name"];
     NSManagedObject *obj = [NSEntityDescription insertNewObjectForEntityForName:@"ContactGroup"

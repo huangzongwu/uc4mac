@@ -12,21 +12,8 @@
 #define PRESENCE_UNKNOWN -1
 #define PRESENCE_OFFLINE 5
 
-@interface ContactItem : NSObject {
-@private
-    NSString* key;
-    NSString* name;
-    NSString* jid;
-    NSString* fullJid;
-    NSData* photo;
-    NSString* status;
-    NSArray* groups;
-    NSInteger presence;
-    NSString* pinyin;
-    BOOL    online;
-    BOOL    vcard;
-    
-}
+@interface ContactItem : NSObject 
+
 @property (nonatomic, retain) NSString* key;
 @property (nonatomic, retain) NSString* name;
 @property (nonatomic, retain) NSString* jid;
