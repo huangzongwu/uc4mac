@@ -27,15 +27,16 @@
 @end
 
 @implementation ContactSortDescriptor
-- (NSComparisonResult)compareObject:(id)object1 toObject:(id)object2
+- (NSComparisonResult) compareObject:(id) object1 toObject:(id) object2
 {
     if ([object1 isKindOfClass:[NSManagedObject class]]) {
         NSString* value1 = [object1 valueForKey:@"name"];
         NSString* value2 = [object2 valueForKey:@"name"];
+        NSString* value3 = [object1 valueForKey:@"presence"];
+        NSString* value4 = [object2 valueForKey:@"presence"];
         if ([value1 isEqualToString:DEFAULT_GROUP_NAME]) {
             return NSOrderedDescending;
-        }
-        else if ([value2 isEqualToString:DEFAULT_GROUP_NAME]) {
+        } else if ([value2 isEqualToString:DEFAULT_GROUP_NAME]) {
             return NSOrderedAscending;
         }
         NSComparisonResult result = [value2 compare:value1];
