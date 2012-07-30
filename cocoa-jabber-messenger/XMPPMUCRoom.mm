@@ -76,7 +76,17 @@ void    CMUCRoomEventHandler::handleMUCMessage(gloox::MUCRoom* room, const gloox
         [message setMessage:[NSString stringWithUTF8String:msg.body().c_str()]];
         [message setJid:senderJid];
         [message setRoomJid:roomJid];
-        [message setTimeStamp:[NSDate date]];
+        if (!msg.when()) {
+            [message setTimeStamp:[NSDate date]];
+        } else {
+            NSArray* stamp = [[NSString stringWithUTF8String:msg.when()->stamp().c_str()] componentsSeparatedByString:@"T"];
+            NSDate *sendTime = [[NSDate alloc] initWithString:[NSString stringWithFormat:@"%@-%@-%@ %@ -0800", 
+                                                               [[stamp objectAtIndex:0] substringWithRange:NSMakeRange(0, 4)], 
+                                                               [[stamp objectAtIndex:0] substringWithRange:NSMakeRange(4, 2)], 
+                                                               [[stamp objectAtIndex:0] substringWithRange:NSMakeRange(6, 2)], 
+                                                               [stamp objectAtIndex:1]]];
+            [message setTimeStamp:sendTime];
+        }
         [m_pRoomManager performSelectorOnMainThread:@selector(activateRoom:) withObject:roomJid waitUntilDone:NO];
         [m_pRoomManager performSelectorOnMainThread:@selector(handleMUCMessage:) withObject:message waitUntilDone:NO];
         [roomJid release];
@@ -195,7 +205,8 @@ bool    CMUCRoomEventHandler::handleMUCRoomDestruction(gloox::MUCRoom* room)
 - (BOOL) sendMessage:(MessageItem*) item
 {
     std::string message = [[item message]UTF8String];
-    if (room) {
+    NSLog(@"%@", [item message]);
+    if (room && [item message]) {
         room->send(message);
         return YES;
     }

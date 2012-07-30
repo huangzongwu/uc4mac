@@ -7,7 +7,6 @@
 //
 
 #import "ChatTextFieldCell.h"
-#import "AsyncImage.h"
 
 @implementation ChatTextFieldCell
 

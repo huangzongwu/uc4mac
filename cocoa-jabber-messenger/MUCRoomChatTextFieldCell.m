@@ -17,7 +17,7 @@
     [paragraphStyle setAlignment:NSLeftTextAlignment];
     NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:[NSColor darkGrayColor], 
                            NSForegroundColorAttributeName, 
-                           [NSFont userFontOfSize:10], 
+                           [NSFont userFontOfSize:15], 
                            NSFontAttributeName, 
                            paragraphStyle, NSParagraphStyleAttributeName, nil];
     
@@ -38,10 +38,10 @@
     
     NSAttributedString* name = [self attributedNameString:sender];
     NSAttributedString* timeStamp = [self attributedTimeStampStringFromDate:messageTime];
-        NSRect textRect = [self textRectFromCellFrame:cellFrame withMinimumWidth:100];
+        NSRect textRect = [self textRectFromCellFrame:cellFrame withMinimumWidth:MAX(name.length*15, 100)];
     
     NSRect bpRect = textRect;
-    bpRect.origin.y += 5;
+    bpRect.origin.y += 10;
     bpRect.size.width += 10;
     bpRect.size.height -= 10;
 
@@ -56,7 +56,7 @@
     [timeStamp drawInRect:timeStampRect];
     
     NSRect nameRect = textRect;
-    nameRect.origin.y = (nameRect.origin.y+2);
+    nameRect.origin.y += 10;
     [name drawInRect:nameRect];
     
     [super drawInteriorWithFrame:textRect inView:controlView];

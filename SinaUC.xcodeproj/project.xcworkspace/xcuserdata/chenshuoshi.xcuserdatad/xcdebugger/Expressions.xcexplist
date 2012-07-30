@@ -3,6 +3,9 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "CMessageSessionEventHandler::handleMessage(gloox::Message const&amp;, gloox::MessageSession*):XMPPSession.mm">
+      </ContextState>
+      <ContextState
          contextName = "gloox::OpenSSLBase::decrypt(std::string const&amp;):tlsopensslbase.cpp">
       </ContextState>
       <ContextState
@@ -118,6 +121,9 @@
                value = "image">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "CMessageSessionEventHandler::handleMessage(gloox::Message const&amp;, gloox::MessageSession*):basic_string.h">
       </ContextState>
       <ContextState
          contextName = "CXmpp::connect():XMPP.mm">

@@ -57,7 +57,7 @@ const NSInteger ARROW_HEIGHT = 10;
 		textRect.origin.x-=15;
 	}
     NSSize requiredSize = [self cellSizeForBounds:textRect];
-    NSInteger requiredWidth = (requiredSize.width+5 > minimumWidth) ? requiredSize.width+5 : minimumWidth;
+    NSInteger requiredWidth = (requiredSize.width > minimumWidth) ? requiredSize.width : minimumWidth;
     if (textRect.size.width > requiredWidth) {
         if (!leftArrow) {
             textRect.origin.x += (textRect.size.width - requiredWidth);
@@ -274,18 +274,23 @@ const NSInteger ARROW_HEIGHT = 10;
 
 - (void) drawInteriorWithFrame:(NSRect) cellFrame inView:(NSView*) controlView {
     NSRect textRect = [self titleRectForBounds:cellFrame];
-    
     if (images && [[self stringValue] hasSuffix:[images objectAtIndex:0]]) {
         NSRect imageRect = textRect;
         NSTextAttachment *attachment;  
-        attachment = [[[NSTextAttachment alloc] init] autorelease];  
+        attachment = [[[NSTextAttachment alloc] init] autorelease];
         NSImage *img = [[NSImage alloc] initWithContentsOfFile:[NSString stringWithFormat:@"/tmp/%@", [images objectAtIndex:0]]]; // or wherever you are 
+        if (img.size.width > 200) {
+            if (textRect.size.width < 200) {
+                [img setSize:NSMakeSize(200, img.size.height*200/img.size.width)];
+            } else {
+                [img setSize:NSMakeSize(textRect.size.width, img.size.height*textRect.size.width/img.size.width)];
+            }
+        }
         [(NSCell*)[attachment attachmentCell] setImage:img];
         NSMutableAttributedString *imgAttrStr;  
         imgAttrStr = (id) [NSMutableAttributedString attributedStringWithAttachment:  
                           attachment];  
         imageRect.origin.y += (textRect.size.height-img.size.height-30);
-
         [imgAttrStr drawInRect:imageRect];
         [img release];
     }
@@ -298,10 +303,17 @@ const NSInteger ARROW_HEIGHT = 10;
     NSSize textSize = [super cellSizeForBounds:aRect];
     if (images && [[self stringValue] hasSuffix:[images objectAtIndex:0]]) {
         NSImage *img = [[NSImage alloc] initWithContentsOfFile:[NSString stringWithFormat:@"/tmp/%@", [images objectAtIndex:0]]];
+        if (img.size.width > 200) {
+            if (aRect.size.width < 200) {
+                [img setSize:NSMakeSize(200, img.size.height*200/img.size.width)];
+            } else {
+                [img setSize:NSMakeSize(aRect.size.width, img.size.height*aRect.size.width/img.size.width)];
+            }
+        }
         CGFloat w = textSize.width > img.size.width ? textSize.width : img.size.width;
         return NSMakeSize(w, textSize.height+img.size.height);
     } else {
-        return NSMakeSize(textSize.width, textSize.height);
+        return NSMakeSize(textSize.width, textSize.height+20);
     }
 }
 
@@ -313,7 +325,7 @@ const NSInteger ARROW_HEIGHT = 10;
     } else {
         titleFrame.origin.x += 5;
     }
-    titleFrame.origin.y += 15;
+    titleFrame.origin.y += 30;
     return titleFrame;
 }
 
@@ -321,12 +333,12 @@ const NSInteger ARROW_HEIGHT = 10;
 {
 	NSRect textRect = [self textRectFromCellFrame:aRect withMinimumWidth:100];
     if (leftArrow) {
-        textRect.origin.x += 13;
+        textRect.origin.x += 15;
     } else {
-        textRect.origin.x += 3;
-    }    
-    textRect.origin.y += 15;
-    [super editWithFrame:textRect inView:controlView editor:textObj delegate:anObject event:theEvent];
+        textRect.origin.x += 5;
+    }
+    textRect.origin.y += 30;
+    [super editWithFrame:aRect inView:controlView editor:textObj delegate:anObject event:theEvent];
     [textObj setDrawsBackground:NO];    
 }
 
@@ -337,8 +349,9 @@ const NSInteger ARROW_HEIGHT = 10;
         textRect.origin.x += 13;
     } else {
         textRect.origin.x += 3;
-    }    
-    textRect.origin.y += 15;
+    }
+    textRect.size.width += 2;
+    textRect.origin.y += 30;
     [super selectWithFrame:textRect inView:controlView editor:textObj delegate:anObject start:selStart length:selLength];
     [textObj setDrawsBackground:NO];
 }

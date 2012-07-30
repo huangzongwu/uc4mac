@@ -30,7 +30,8 @@
         [connection release]; 
     }
     if (data) { 
-        [data release]; 
+        [data release];
+        data = nil;
     }
     [self setPicName:thePicName];
     
@@ -86,11 +87,15 @@
 - (void) connectionDidFinishLoading:(NSURLConnection*) theConnection 
 {
     //write data to /tmp/picname
-    [data writeToFile:[NSString stringWithFormat:@"/tmp/%@", picName] atomically:false];
-    NSEnumerator* e = [asyncImageDelegates objectEnumerator];
-    id < AsyncImageDelegate > asyncImageDelegate;
-    while (asyncImageDelegate = [e nextObject]) {
-        [asyncImageDelegate imageloaded:picName];
+    if ([data length] > 0) {
+        [data writeToFile:[NSString stringWithFormat:@"/tmp/%@", picName] atomically:true];
+        NSEnumerator* e = [asyncImageDelegates objectEnumerator];
+        id < AsyncImageDelegate > asyncImageDelegate;
+        while (asyncImageDelegate = [e nextObject]) {
+            [asyncImageDelegate imageloaded:picName];
+        }
+    } else {
+        [self loadImage:picName];
     }
 }
 

@@ -254,7 +254,7 @@ void    CXmpp::disconnect()
 
 void    CXmpp::joinRooms(NSString* uid)
 {
-    if (!m_pClient) {
+    if (!m_pClient || !m_pDelegate) {
         return;
     }
     NSMutableArray* roomInfos = [[NSMutableArray alloc] initWithArray:[[m_pDelegate tgtRequest] getRoomList:uid]];
@@ -277,6 +277,9 @@ void    CXmpp::joinRooms(NSString* uid)
 
 void    CXmpp::updateRoomContacts()
 {
+    if (!m_pClient || !m_pDelegate) {
+        return;
+    }
     NSMutableArray* roomContacts = [[NSMutableArray alloc] initWithCapacity:[rooms count]];
     for (XMPPMUCRoom* room in rooms) {
         NSMutableDictionary* contacts = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[[m_pDelegate tgtRequest] getRoomContacts: [room gid]], @"contacts", [room jid], @"roomjid", nil];
@@ -287,13 +290,12 @@ void    CXmpp::updateRoomContacts()
 }
 
 bool    CXmpp::setLoginInfo(NSString* loginId, NSString* password)
-{
-    delete m_pClient;
-    delete m_pVcardManager;
-    
+{    
     gloox::JID* jid = new gloox::JID();
     jid->setServer("uc.sina.com.cn");
     jid->setResource("darwin");
+    NSLog(@"%@", loginId);
+    NSLog(@"%@", password);
     [[m_pDelegate tgtRequest] setTgt:md5([loginId stringByAppendingFormat:@"%@", password])];
     loginId = [loginId stringByReplacingOccurrencesOfString:@"@"
                                          withString:@"\\40"];
@@ -313,7 +315,7 @@ bool    CXmpp::setLoginInfo(NSString* loginId, NSString* password)
 
 void    CXmpp::connect()
 {
-    if (!m_pClient) {
+    if (!m_pClient || !m_pDelegate) {
         return;
     }
     if (m_pClient->connect(false)) {
@@ -350,9 +352,6 @@ void    CXmpp::connect()
 
 void    CXmpp::requestVcard(NSString* jid)
 {
-    if (!m_pVcardManager) {
-        return;
-    }
     [vcardStack addObject:jid];
 }
 
@@ -363,7 +362,7 @@ void 	CXmpp::handleVCardResult (gloox::VCardHandler::VCardContext context, const
 
 void    CXmpp::startChat(gloox::JID& jid)
 {
-    if (!m_pDelegate) { 
+    if (!m_pClient || !m_pDelegate) {
         return; 
     }
     gloox::MessageSession* pSession = new gloox::MessageSession( m_pClient, jid );
@@ -375,6 +374,9 @@ void    CXmpp::startChat(gloox::JID& jid)
 
 void    CXmpp::closeSession(gloox::MessageSession* pSession)
 {
+    if (!m_pClient || !m_pDelegate) {
+        return;
+    }
     m_pClient->disposeMessageSession(pSession);
 }
 
@@ -382,7 +384,7 @@ void    CXmpp::closeSession(gloox::MessageSession* pSession)
 #pragma mark *** ConnectionListener ***
 void 	CXmpp::onConnect ()
 {
-    if (!m_pDelegate) {
+    if (!m_pClient || !m_pDelegate) {
         return;
     }
     NSString* myJid = [NSString stringWithUTF8String: m_pClient->jid().bare().c_str()];
@@ -391,7 +393,7 @@ void 	CXmpp::onConnect ()
 
 void 	CXmpp::onDisconnect (gloox::ConnectionError e)
 {
-    if (!m_pDelegate) {
+    if (!m_pClient || !m_pDelegate) {
         return;
     }
     if (m_pVcardManager){
@@ -411,7 +413,7 @@ void 	CXmpp::onDisconnect (gloox::ConnectionError e)
 
 void 	CXmpp::onSessionCreateError (const gloox::Error *error)
 {
-    if (!m_pDelegate) { 
+    if (!m_pClient || !m_pDelegate) {
         return; 
     }
     std::string errorString;
@@ -428,7 +430,7 @@ void 	CXmpp::onSessionCreateError (const gloox::Error *error)
 #pragma mark *** VCard Handlers ***
 void 	CXmpp::handleVCard (const gloox::JID &jid, const gloox::VCard *vcard)
 {
-    if (!m_pDelegate) {
+    if (!m_pClient || !m_pDelegate) {
         return;
     }
     ContactItem* item = [[ContactItem alloc] init];
@@ -459,7 +461,7 @@ void 	CXmpp::handleVCard (const gloox::JID &jid, const gloox::VCard *vcard)
 #pragma mark *** RosterListener ***
 void 	CXmpp::handleRoster (const gloox::Roster &roster)
 {
-    if (!m_pDelegate) { 
+    if (!m_pClient || !m_pDelegate) {
         return; 
     }
     gloox::Roster* pRoster = new gloox::Roster(roster);
